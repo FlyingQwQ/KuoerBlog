@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="../../css/edit.css">
+<link rel="stylesheet" href="../../css/dracula.css">
+
+<p style="margin-top: 30px; text-align: center; font-weight: 600; font-size: 20px;">请在左边编写MarkDown语法</p>
+<div class="edit-header">
+    <div class="titleFrame">
+        <input type="text" class="form-control" id="title" placeholder="帖子标题">
+    </div>
+    <div class="buttonFrame">
+        <button class="btn editBtn"></button>
+        <button class="btn removeBtn">删除</button>
+    </div>
+</div>
+<div class="labelFrame">
+    <input type="text" class="form-control" id="label" placeholder="帖子标签">
+</div>
+<div class="edit-content">
+    <textarea id="edit"></textarea>
+    <div id="preview"></div>
+</div>
+
+<script src="../../js/marked.min.js"></script>
+<script src="../../js/highlight.min.js"></script>
+<script src="../../js/edit.js"></script>
+
+<script>
+    // 代码高亮初始化
+    hljs.initHighlightingOnLoad();
+</script>

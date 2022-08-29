@@ -1,0 +1,59 @@
+.friendChain {
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(182, 182, 182);
+    border-radius: 5px;
+    overflow-x: scroll;
+}
+
+.friendChain .items .item, .addItem {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    min-width: 550px;
+}
+
+.friendChain .items .item .webIcon, .addItem .webIcon {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+}
+.friendChain .items .item .info, .addItem .info { 
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 60px;
+}
+.friendChain .items .item .info .title, .addItem .title {
+    font-size: 20px;
+    color: rgb(49, 49, 49);
+    transition: color .3s;
+} 
+.friendChain .items .item .info .subTitle {
+    font-size: 13px;
+    color: #666;
+}
+
+.friendChain .items .item .button-group {
+    margin-left: 10px;
+    height: 60px;
+    display: none;
+}
+
+
+.friendChain .items button {
+    width: 60px;
+    background-color: rgb(226, 226, 226);
+    border: 1px solid rgb(189, 189, 189);
+    border-radius: 5px;
+}
+.friendChain .items button:active {
+    background-color: rgb(190, 190, 190);
+} 
+.friendChain .items button:nth-child(1) {
+    margin-bottom: 5px;
+}
+.friendChain .items input {
+    border-radius: 5px;
+    border: 1px solid rgb(165, 165, 165);
+}

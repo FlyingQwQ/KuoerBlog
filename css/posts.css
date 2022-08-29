@@ -1,0 +1,25 @@
+img {
+    box-shadow: 0px 0px 6px 1px rgb(128, 128, 128);
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.main .posts_header .title {
+    margin: 30px 0px 30px 10px;
+    font-size: 30px;
+    font-weight: 600;
+}
+.main .posts_header .date {
+    margin: 30px 0px 30px 0px;
+    font-size: 16px;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.main .content {
+    padding: 0px 10px 120px 10px;
+    margin-top: 60px;
+    font-size: 16px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
