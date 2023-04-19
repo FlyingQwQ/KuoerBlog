@@ -1,0 +1,29 @@
+package top.kuoer.common;
+
+import top.kuoer.enums.ResultCode;
+
+public class Result {
+
+    private int code;
+    private String message;
+    private Object data;
+
+    public Result(ResultCode resultCode, Object data) {
+        this.code = resultCode.getCode();
+        this.message = resultCode.getMsg();
+        this.data = data;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+}

@@ -1,0 +1,26 @@
+.main .content .items .item {
+    height: 120px;
+    /* border: 2px solid; */
+    display: flex;
+    align-items: center;
+}
+.main .content .items .item .webIcon {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+}
+.main .content .items .item .info { 
+    margin-left: 10px;
+}
+.main .content .items .item .info .title {
+    font-size: 20px;
+    color: rgb(49, 49, 49);
+    transition: color .3s;
+} 
+.main .content .items .item .info .title:hover {
+    color: rgb(46, 70, 105);
+} 
+.main .content .items .item .info .subTitle {
+    font-size: 13px;
+    color: #666;
+}

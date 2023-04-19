@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="../../css/edit.css">
+<link rel="stylesheet" href="../../css/lib/dracula.css">
+
+<div style="overflow-x: scroll;">
+    <div style="min-width: 600px;">
+        <p style="margin-top: 30px; text-align: center; font-weight: 600; font-size: 20px;">请在左边编写MarkDown语法</p>
+        <div class="edit-header">
+            <div class="titleFrame">
+                <input type="text" class="form-control" id="title" placeholder="帖子标题">
+            </div>
+            <div class="buttonFrame">
+                <button class="btn editBtn"></button>
+                <button class="btn removeBtn">删除</button>
+            </div>
+        </div>
+        <div class="labelFrame">
+            <input type="text" class="form-control" id="label" placeholder="帖子标签">
+        </div>
+        <div class="edit-content">
+            <!-- <textarea id="edit"></textarea> -->
+            <pre id="editor"></pre>
+            <div id="preview"></div>
+        </div>
+    </div>
+</div>
+
+<script src="../../js/lib/marked.min.js"></script>
+<script src="../../js/lib/highlight.min.js"></script>
+<script src="../../js/lib/aceedit/ace.js"></script>
+<script src="../../js/lib/aceedit/ext-language_tools.js"></script>
+<script src="../../js/edit.js"></script>
+
+<script>
+    // 代码高亮初始化
+    hljs.initHighlightingOnLoad();
+</script>

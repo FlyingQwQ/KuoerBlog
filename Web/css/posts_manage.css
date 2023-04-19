@@ -1,0 +1,26 @@
+.posts {
+    min-width: 550px;
+}
+
+.posts .region {
+    margin: 10px 0px 0px 0px;
+}
+.posts .region .year {
+    margin: 0;
+    font-size: 25px;
+} 
+
+.posts .region .item .date {
+    margin: 0;
+    font-size: 18px;
+}
+.posts .region .item .title {
+    font-size: 18px;
+}
+
+.posts .title {
+    height: max-content;
+}
+.posts .item {
+    margin-bottom: 5px;
+}

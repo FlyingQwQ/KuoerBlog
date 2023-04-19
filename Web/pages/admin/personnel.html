@@ -1,0 +1,74 @@
+<link rel="stylesheet" href="../../css/personnel.css">
+
+<div class="personnel">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                人员列表
+            </h3>
+        </div>
+        
+        <div class="panel-body"  style="overflow-x: scroll;">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>用户名</th>
+                        <th>Token</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 这里显示人员列表 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        修改账号
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">用户名</span>
+                        <input type="text" class="form-control modifyName" placeholder="待修改的用户名">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</span>
+                        <input type="password" class="form-control modifyPass" placeholder="待修改的密码">
+                    </div>
+                    <button type="button" class="btn btn-primary modifyBtn">确认修改</button>
+                </div>
+            </div>
+        </div>
+    
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        添加账号
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">用户名</span>
+                        <input type="text" class="form-control addName">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</span>
+                        <input type="password" class="form-control addPass">
+                    </div>
+                    <button type="button" class="btn btn-success addBtn">添加账号</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../js/personnel.js"></script>

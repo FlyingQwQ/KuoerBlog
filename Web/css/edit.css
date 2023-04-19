@@ -1,0 +1,130 @@
+img {
+    box-shadow: 0px 0px 6px 1px rgb(128, 128, 128);
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.edit-header {
+    box-sizing: border-box;
+    padding: 5px;
+    height: 50px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+.edit-header .titleFrame {
+    height: 100%;
+    flex-grow: 1;
+    display: flex;
+}
+.edit-header #title {
+    margin-left: 10px;
+    width: 100%;
+    height: 100%;
+}
+.edit-header .buttonFrame {
+    /* flex-grow: 1; */
+    height: 100%;
+    padding-left: 10px;
+}
+.edit-header .buttonFrame .btn {
+    height: 100%;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(212, 212, 212);
+    font-weight: 600;
+    display: none;
+}
+.edit-header .buttonFrame .btn:hover {
+    background-color: rgb(185, 185, 185);
+}
+.edit-header .buttonFrame .btn:active {
+    background-color: rgb(146, 146, 146);
+}
+
+.labelFrame {
+    box-sizing: border-box;
+    padding: 5px;
+    height: 50px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+.labelFrame #label {
+    margin-left: 10px;
+    width: 20%;
+    height: 100%;
+}
+pre {
+    box-shadow: none;
+    margin: 0;
+}
+.edit-content {
+    min-height: 300px;
+    max-height: 500px;
+    width: 100%;
+    background-color: rgb(245, 245, 245);
+    border-radius: 10px;
+    padding: 10px;
+    height: max-content;
+    box-sizing: border-box;
+    display: flex;
+    
+}
+.edit-content #editor {
+    margin-right: 5px;
+    min-height: 300px;
+    max-height: calc(500px - 25px);
+    flex-grow: 1;
+    resize: vertical;
+    outline: none;
+    border: 1px solid rgb(182, 182, 182);
+    border-radius: 5px;
+    max-width: 50%;
+}
+.edit-content #edit {
+    margin-right: 5px;
+    min-height: 300px;
+    max-height: calc(500px - 25px);
+    flex-grow: 1;
+    resize: vertical;
+    outline: none;
+    border: 1px solid rgb(182, 182, 182);
+    border-radius: 5px;
+    font-weight: 600;
+    max-width: 50%;
+}
+.edit-content #preview {
+    padding: 10px;
+    background-color: white;
+    flex-grow: 2;
+    border-radius: 5px;
+    word-wrap: normal;
+    max-width: 50%;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    border: 1px solid rgb(182, 182, 182);
+}
+
+table {
+    font-family: verdana,arial,sans-serif;
+    font-size:11px;
+    color:#333333;
+    border-width: 1px;
+    border-color: #666666;
+    border-collapse: collapse;
+}
+table th {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #dedede;
+}
+table td {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #ffffff;
+}
