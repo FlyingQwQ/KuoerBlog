@@ -3,6 +3,9 @@ class Comment {
         this.elm = $(elm);
         this.label = label;
 
+        this.replyCommentEle = undefined;
+        this.replyID = -1;
+
         this.init();
     }
 
@@ -18,7 +21,8 @@ class Comment {
                     名称
                     <input class="name" type="text" value="${commentName}">
                 </div>
-                <button class="push">发表评论</button>
+                <button class="btn push">发表评论</button>
+                <button class="btn cancelReply" style="display: none;">取消回复</button>
             </div>
             <div class="comments">
                 
@@ -40,20 +44,47 @@ class Comment {
                 comments.html('');
                 target.data.sort(function(a, b) {
                     return b.id - a.id;
-                }).forEach(element => {
+                }).forEach(data => {
+                    let element = data.comment;
                     let date = new Date(element.date);
                     let newDate = date.getFullYear() + "年" + addZero(date.getMonth() + 1) + "月" + addZero(date.getDate()) + "日";
                     let item = $(`
                         <div class="item">
-                            <img class="icon" src="${this.gen_text_img([50, 50], element.name)}" width="50" height="50">
-                            <div>
-                                <p class="name">&lt;${element.name}&gt;<span class="date">${newDate}</span></p>
-                                <p class="value"></p>
+                            <div class="comment">
+                                <img class="icon" src="${this.gen_text_img([50, 50], element.name)}" width="50" height="50">
+                                <div>
+                                    <p class="name">${element.name}<span class="date">${newDate}</span> <a class="reply" cid="${element.id}">回复</a></p>
+                                    <p class="value">${element.value}</p>
+                                </div>
+                            </div>
+                            <div class="replyComment">
+
                             </div>
                         </div>
                     `);
-                    item.find('.value').text(" - " + element.value);
+
+
+                    let replyComment = item.find('.replyComment');
+                    let replyCommentList = data.replyComments;
+                    replyCommentList.sort(function(a, b) {
+                        return b.id - a.id;
+                    }).forEach(replyCommentData => {
+                        let date = new Date(replyCommentData.date);
+                        let newDate = date.getFullYear() + "年" + addZero(date.getMonth() + 1) + "月" + addZero(date.getDate()) + "日";
+                        let replyCommentItem = $(`
+                            <div class="replyItem">
+                                <p class="name">${replyCommentData.name}<span class="date">${newDate}</span></p>
+                                <p class="value">${replyCommentData.value}</p>
+                            </div>
+                        `);
+                        replyComment.append(replyCommentItem);
+                    });
+
                     comments.append(item);
+
+                    item.find('.reply').click((target) => {
+                        this.reply(target);
+                    });
                 });
             }
         });
@@ -63,7 +94,7 @@ class Comment {
         var comment = this.elm.find('#comment');
         var name = this.elm.find('.name');
         let push = this.elm.find('.push');
-        
+        let cancelReplyElm = this.elm.find('.cancelReply');
 
         push.click(() => {
 
@@ -74,25 +105,52 @@ class Comment {
 
             localStorage.setItem('commentName', name.val());
 
-            var loadComment = this.loadComment;
-            $.ajax({
-                url: api + 'comment/addComment',
-                data: {
-                    name: name.val(),
-                    value: comment.val(),
-                    label: this.label
-                },
-                type: 'get',
-                success: (target) => {
-                    if(target.code == 1) {
-                        this.loadComment();
-                        comment.val('');
-                    } else {
-                        alert('发表失败！');
+            if(this.replyID > -1) {
+                $.ajax({
+                    url: api + 'comment/addReplyComment',
+                    data: {
+                        name: name.val(),
+                        value: comment.val(),
+                        label: this.label,
+                        replyid: this.replyID
+                    },
+                    type: 'get',
+                    success: (target) => {
+                        if(target.code == 1) {
+                            this.loadComment();
+                            comment.val('');
+                            this.cancelReply();
+                        } else {
+                            alert('发表失败！');
+                        }
+                        
                     }
-                    
-                }
-            });
+                });
+            } else {
+                $.ajax({
+                    url: api + 'comment/addComment',
+                    data: {
+                        name: name.val(),
+                        value: comment.val(),
+                        label: this.label
+                    },
+                    type: 'get',
+                    success: (target) => {
+                        if(target.code == 1) {
+                            this.loadComment();
+                            comment.val('');
+                        } else {
+                            alert('发表失败！');
+                        }
+                        
+                    }
+                });
+            }
+            
+        });
+
+        cancelReplyElm.click(() => {
+            this.cancelReply();
         });
     }
 
@@ -123,4 +181,27 @@ class Comment {
         return cvs.toDataURL('image/jpeg', 1);
     }
 
+    reply(target) {
+        let commentId = $(target.currentTarget).attr('cid');
+        this.replyID = commentId;
+        this.elm.find('.cancelReply').show();
+        
+        if(this.replyCommentEle) {
+            this.replyCommentEle.css({
+                'backgroundColor': 'transparent'
+            });
+        }
+        this.replyCommentEle = $(target.currentTarget).parent().parent().parent().parent();
+        this.replyCommentEle.css({
+            'backgroundColor': 'rgba(61, 61, 61, 0.1)'
+        });
+    }
+    cancelReply() {
+        this.replyID = -1;
+        this.elm.find('.cancelReply').hide();
+
+        this.replyCommentEle.css({
+            'backgroundColor': 'transparent'
+        });
+    }
 }

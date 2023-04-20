@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.kuoer.common.Result;
 import top.kuoer.entity.Comment;
+import top.kuoer.entity.ReplyComment;
 import top.kuoer.service.CommentService;
 
 import java.util.List;
@@ -28,8 +29,13 @@ public class CommentController {
     }
 
     @RequestMapping(path = "/addComment", method = RequestMethod.GET)
-    public Result findCommentByLabel(Comment comment) {
+    public Result addComment(Comment comment) {
         return commentService.addComment(comment);
+    }
+
+    @RequestMapping(path = "/addReplyComment", method = RequestMethod.GET)
+    public Result addReplyComment(ReplyComment replyComment) {
+        return commentService.addReplyComment(replyComment);
     }
 
 }

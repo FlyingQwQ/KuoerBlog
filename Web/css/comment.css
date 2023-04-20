@@ -26,6 +26,7 @@
     height: 100%;
     display: flex;
     line-height: 30px;
+    font-weight: bold;
 }
 .commentFrame .operation input {
     margin-left: 10px;
@@ -35,48 +36,76 @@
     flex: 1;
     border: 2px solid black;
     border-radius: 5px;
+    font-weight: 500;
 }
-.commentFrame .operation .push {
+.commentFrame .operation .btn {
     height: 100%;
     border: 2px solid black;
     background-color: white;
-    font-size: 14px;
+    font-size: 12px;
     border-radius: 5px;
+    font-weight: bold;
+    line-height: 10px;
 }
-.commentFrame .operation .push:hover {
+.commentFrame .operation .cancelReply {
+    margin-left: 10px;
+}
+.commentFrame .operation .btn:hover {
     background-color: rgb(240, 240, 240);
 }
-.commentFrame .operation .push:active {
+.commentFrame .operation .btn:active {
     background-color: rgb(221, 221, 221);
 }
 
 .commentFrame .comments .item {
     margin-top: 20px;
-    padding-top: 5px;
-    display: flex;
+    /* border: 2px solid rgb(0, 0, 0); */
+    border-radius: 5px;
     align-items: center;
+    background-color: transparent;
+    transition: background-color .5s;
+}
+.commentFrame .comments .item .comment {
+    display: flex;
+}
+.commentFrame .comments .item .replyComment {
+    padding-left: 30px;
+}
+.commentFrame .comments .item .replyComment .replyItem {
+    padding-left: 3px;
+    margin-top: 3px;
+    border-left: 2px solid black;
 }
 .commentFrame .comments .item img {
     margin-right: 10px;
     box-shadow: none;
     border: none;
     border-radius: 5px;
+    border: 2px solid black;
 }
 .commentFrame .comments p {
     margin: 0;
 }
 .commentFrame .comments .name {
-    color: rgb(136, 136, 136);
-    font-size: 17px;
+    color: rgb(0, 0, 0);
+    font-size: 15px;
 }
 .commentFrame .comments .name .date {
     margin-left: 10px;
-    font-size: 14px;
+    font-size: 12px;
+    color: rgb(118, 118, 118);
+}
+.commentFrame .comments .name .reply {
+    margin-left: 10px;
+    font-size: 12px;
     color: rgb(61, 61, 61);
+    text-decoration: underline;
+    cursor: pointer;
 }
 .commentFrame .comments .value {
     margin: 0px 0px 0px 10px;
     font-weight: 500;
+    color: rgb(74, 74, 74);
 }
 
 .row {

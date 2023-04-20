@@ -2,6 +2,7 @@ package top.kuoer.service;
 
 import top.kuoer.common.Result;
 import top.kuoer.entity.Comment;
+import top.kuoer.entity.ReplyComment;
 
 import java.util.List;
 
@@ -20,5 +21,12 @@ public interface CommentService {
      * @return 是否成功
      */
     Result addComment(Comment comment);
+
+    /**
+     * 添加回复评论
+     * @param replyComment 回复评论信息
+     * @return 是否成功
+     */
+    Result addReplyComment(ReplyComment replyComment);
 
 }

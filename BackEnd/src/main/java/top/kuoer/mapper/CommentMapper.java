@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 import top.kuoer.entity.Comment;
+import top.kuoer.entity.ReplyComment;
 
 import java.util.List;
 
@@ -13,10 +14,16 @@ import java.util.List;
 @Repository
 public interface CommentMapper {
 
-    @Select("select * from comment where label = #{label}")
+    @Select("select * from comment where label = #{label} and replyid = -1")
     List<Comment> findCommentByLabel(@Param("label") String label);
 
     @Insert("insert into comment (name, value, label, date) values (#{name}, #{value}, #{label}, #{date})")
     boolean addComment(Comment comment);
+
+    @Insert("insert into comment (name, value, label, date, replyid) values (#{name}, #{value}, #{label}, #{date}, #{replyid})")
+    boolean addReplyComment(ReplyComment replyComment);
+
+    @Select("select * from comment where replyid = #{replyid}")
+    List<ReplyComment> findCommentByReplyId(@Param("replyid") int replyid);
 
 }
