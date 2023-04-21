@@ -35,7 +35,7 @@ function loadPosts() {
 function edit(id) {
     localStorage.setItem('editType', 'modify');
     localStorage.setItem('modifyId', id);
-    loadItem('edit');
+    loadItem('edit_posts');
 }
 
 function sortDown(a,b){

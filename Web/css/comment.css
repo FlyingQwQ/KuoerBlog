@@ -59,7 +59,6 @@
 
 .commentFrame .comments .item {
     margin-top: 20px;
-    /* border: 2px solid rgb(0, 0, 0); */
     border-radius: 5px;
     align-items: center;
     background-color: transparent;
@@ -69,7 +68,7 @@
     display: flex;
 }
 .commentFrame .comments .item .replyComment {
-    padding-left: 30px;
+    padding-left: 25px;
 }
 .commentFrame .comments .item .replyComment .replyItem {
     padding-left: 3px;

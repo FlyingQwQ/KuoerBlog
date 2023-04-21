@@ -19,7 +19,8 @@ $(document).ready(function() {
 
 // 默认加载push页面
 // loadItem('web_manage');
-loadItem('personnel');
+// loadItem('personnel');
+loadItem('posts_manage');
 
 $('.main .header .homeBtn').click(function() {
     location.href = '../../index.html'
@@ -33,8 +34,7 @@ $('.main .header .postsBtn').click(function() {
     $('.main .header .postsBtn').addClass('active').siblings().removeClass('active');
 });
 $('.main .header .pushBtn').click(function() {
-    localStorage.setItem('editType', 'add');
-    loadItem('edit');
+    loadItem('send_posts');
     $('.main .header .pushBtn').addClass('active').siblings().removeClass('active');
 });
 $('.main .header .webManageBtn').click(function() {

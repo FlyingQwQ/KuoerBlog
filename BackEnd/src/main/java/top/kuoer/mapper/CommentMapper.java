@@ -1,9 +1,6 @@
 package top.kuoer.mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 import top.kuoer.entity.Comment;
 import top.kuoer.entity.ReplyComment;
@@ -26,4 +23,6 @@ public interface CommentMapper {
     @Select("select * from comment where replyid = #{replyid}")
     List<ReplyComment> findCommentByReplyId(@Param("replyid") int replyid);
 
+    @Delete("DELETE FROM comment WHERE id = #{id}")
+    boolean delComment(@Param("id") int id);
 }

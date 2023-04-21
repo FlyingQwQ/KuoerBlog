@@ -33,7 +33,6 @@ img {
     border-radius: 5px;
     background-color: rgb(212, 212, 212);
     font-weight: 600;
-    display: none;
 }
 .edit-header .buttonFrame .btn:hover {
     background-color: rgb(185, 185, 185);
@@ -126,5 +125,36 @@ table td {
     padding: 8px;
     border-style: solid;
     border-color: #666666;
-    background-color: #ffffff;
+    background-color: #c47878;
+}
+
+.comments .item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid rgb(182, 182, 182);
+    border-radius: 5px;
+}
+.comments .delComment {
+    cursor: pointer;
+}
+.comments .item .name {
+    margin: 0;
+    font-size: 12px;
+}
+.comments .item .name .date {
+    margin-left: 10px;
+}
+.comments .item .value {
+    margin: 0;
+    margin-left: 10px;
+    color: rgb(108, 108, 108);
+}
+.comments .item .replyComment {
+    margin-left: 10px;
+    padding-left: 10px;
+}
+.comments .item .replyComment .replyItem {
+    border-left: 2px solid black;
+    margin-top: 3px;
+    padding-left: 3px;
 }

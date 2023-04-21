@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../../css/edit.css">
+<link rel="stylesheet" href="../../css/send_posts.css">
 <link rel="stylesheet" href="../../css/lib/dracula.css">
 
 <div style="overflow-x: scroll;">
@@ -9,15 +9,13 @@
                 <input type="text" class="form-control" id="title" placeholder="帖子标题">
             </div>
             <div class="buttonFrame">
-                <button class="btn editBtn"></button>
-                <button class="btn removeBtn">删除</button>
+                <button class="btn editBtn">发布</button>
             </div>
         </div>
         <div class="labelFrame">
-            <input type="text" class="form-control" id="label" placeholder="帖子标签">
+            <input type="text" class="form-control" id="label" placeholder="标签，不存在自动创建">
         </div>
         <div class="edit-content">
-            <!-- <textarea id="edit"></textarea> -->
             <pre id="editor"></pre>
             <div id="preview"></div>
         </div>
@@ -28,7 +26,7 @@
 <script src="../../js/lib/highlight.min.js"></script>
 <script src="../../js/lib/aceedit/ace.js"></script>
 <script src="../../js/lib/aceedit/ext-language_tools.js"></script>
-<script src="../../js/edit.js"></script>
+<script src="../../js/send_posts.js"></script>
 
 <script>
     // 代码高亮初始化

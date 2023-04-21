@@ -29,4 +29,10 @@ public interface CommentService {
      */
     Result addReplyComment(ReplyComment replyComment);
 
+    /**
+     * 删除评论
+     * @param id 评论id
+     * @return 是否成功
+     */
+    Result delComment(int id);
 }

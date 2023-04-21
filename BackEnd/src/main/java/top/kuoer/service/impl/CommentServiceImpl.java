@@ -58,4 +58,12 @@ public class CommentServiceImpl implements CommentService {
         return new Result(ResultCode.OPERATIONFAIL, "请检查数据库是否有问题");
     }
 
+    @Override
+    public Result delComment(int id) {
+        if(this.commentMapper.delComment(id)) {
+            return new Result(ResultCode.SUCCESS, null);
+        }
+        return new Result(ResultCode.OPERATIONFAIL, "请检查数据库是否有问题");
+    }
+
 }
