@@ -19,8 +19,7 @@ $(document).ready(function() {
 
 // 默认加载push页面
 // loadItem('web_manage');
-// loadItem('personnel');
-loadItem('posts_manage');
+loadItem('personnel');
 
 $('.main .header .homeBtn').click(function() {
     location.href = '../../index.html'
