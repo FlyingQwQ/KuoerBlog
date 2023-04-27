@@ -19,7 +19,8 @@ $(document).ready(function() {
 
 // 默认加载push页面
 // loadItem('web_manage');
-loadItem('personnel');
+// loadItem('personnel');
+loadItem('web_manage');
 
 $('.main .header .homeBtn').click(function() {
     location.href = '../../index.html'

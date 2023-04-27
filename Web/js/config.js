@@ -1,5 +1,5 @@
-// var api = 'http://localhost:8081/';
-var api = 'https://blogapi.kuoer.top:2333/';
+var api = 'http://localhost:8081/';
+// var api = 'https://blogapi.kuoer.top:2333/';
 
 setTimeout(function() {
     let loading = $('.loading');
