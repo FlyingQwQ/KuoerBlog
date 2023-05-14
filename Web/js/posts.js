@@ -17,7 +17,7 @@ function loadContent() {
             if (target.code == 1) {
                 let result = target.data
                 
-                document.title = result.title + ' - ' + document.title;
+                document.title = result.title + ' - Kuoer\'s Blog';
                 title.html(result.title);
                 content.html(marked.parse(result.content));
                 let date = new Date(result.date);

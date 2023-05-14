@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import top.kuoer.utils.PreloadWebClient;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.logging.Logger;
 
 @Service
@@ -21,35 +22,68 @@ public class HandleService {
         this.preloadWebClient = preloadWebClient;
     }
 
-    public String handleRequest(HttpServletRequest request) {
+    public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
         String path = request.getRequestURI();  // 获取请求路径
         String query = request.getQueryString();  // 获取请求参数
 
-        if(path.equals("/")) {
-            path = "/index.html";
-        }
+        path = this.handleRedirect(path);
 
         String url = this.preloadWeb + path + (query == null ? "" : "?" + query);
         String fileType = getURIFileType(path);
 
-        this.logger.info(url);
-
-        if(fileType.equals("html")) {
-            String htmlSource = this.preloadWebClient.getHttpResource(url);
-            if(!htmlSource.startsWith("#Don't Preload")) {
-                return this.preloadWebClient.preloadHtmlPage(url);
-            }
-            return htmlSource.replace("#Don't Preload", "");
+        if(path.startsWith("redirect:")) {
+            url = path.substring(path.indexOf("redirect:") + "redirect:".length());
         }
-        return this.preloadWebClient.getHttpResource(url);
+
+        String htmlSource = this.preloadWebClient.getHttpResource(url);
+        if(!"".equals(htmlSource)) {
+            if(fileType.equals("html")) {
+                // html文件开头添加 #Don't Preload 则表示，不使用后端渲染
+                if(!htmlSource.startsWith("#Don't Preload")) {
+                    htmlSource = this.preloadWebClient.preloadHtmlPage(url);
+                }
+                htmlSource = htmlSource.replace("#Don't Preload", "");
+            }
+        } else {
+            htmlSource = "404 not found";
+            // 打印日志
+            this.logger.info("404：" + path + (query == null ? "" : "?" + query));
+        }
+        return htmlSource;
     }
 
+    /**
+     * 获取uri中的资源类型
+     * @param uri
+     * @return 资源类型
+     */
     public String getURIFileType(String uri) {
         String fileType = uri.substring(uri.lastIndexOf(".") + 1);
         if(!fileType.equals("")) {
             return fileType;
         }
         return "";
+    }
+
+    /**
+     * 处理资源位置的重定向
+     * @param resourceLocation 资源位置
+     * @return 重定向之后的位置
+     */
+    public String handleRedirect(String resourceLocation) {
+        String target;
+        switch(resourceLocation) {
+            case "/":
+                target = "/index.html";
+                break;
+            case "/sitemap.txt":
+                target = "redirect:https://blogapi.kuoer.top:2333/sitemap.txt";
+                break;
+            default:
+                target = resourceLocation;
+                break;
+        }
+        return target;
     }
 
 }

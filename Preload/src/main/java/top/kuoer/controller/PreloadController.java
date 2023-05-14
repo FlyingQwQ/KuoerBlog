@@ -7,6 +7,7 @@ import top.kuoer.service.HandleService;
 import top.kuoer.utils.PreloadWebClient;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public class PreloadController {
@@ -19,8 +20,8 @@ public class PreloadController {
     }
 
     @GetMapping("/**")
-    public String handleRequest(HttpServletRequest request) {
-        return this.handleService.handleRequest(request);
+    public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        return this.handleService.handleRequest(request, response);
     }
 
 

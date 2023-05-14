@@ -1,13 +1,12 @@
 package top.kuoer.utils;
 
-import com.gargoylesoftware.htmlunit.*;
-import com.gargoylesoftware.htmlunit.html.DomElement;
-import com.gargoylesoftware.htmlunit.html.DomNodeList;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,9 +15,10 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Component
 public class PreloadWebClient {
@@ -26,6 +26,7 @@ public class PreloadWebClient {
     @Value("${preloadWeb}")
     private String preloadWeb;
     private ChromeDriver chromeDriver;
+    private Map<String, String> replaceElementAttributeMap = new HashMap<>();
 
 
     public PreloadWebClient() {
@@ -39,44 +40,22 @@ public class PreloadWebClient {
         options.addArguments("--disable-images");
 
         this.chromeDriver = new ChromeDriver(options);
+
+        this.replaceElementAttributeMap.put("link", "href");
+        this.replaceElementAttributeMap.put("img", "src");
+        this.replaceElementAttributeMap.put("script", "src");
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            this.chromeDriver.quit();
+            System.out.println("已关闭Selenium");
+        }));
     }
 
     public String preloadHtmlPage(String url) {
-        chromeDriver.get(url);
+        this.chromeDriver.get(url);
+        this.replaceHtmlSource(this.chromeDriver);
         return chromeDriver.getPageSource();
     }
-
-//    public String preloadHtmlPage(String url) {
-//        try {
-//            WebClient webClient = new WebClient(BrowserVersion.FIREFOX);
-//            webClient.getOptions().setUseInsecureSSL(true);
-//            webClient.getOptions().setJavaScriptEnabled(true);
-//            webClient.getOptions().setCssEnabled(false);
-//            webClient.getOptions().setThrowExceptionOnScriptError(false);
-//            webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
-//
-//            WebRequest request = new WebRequest(new URL(url), HttpMethod.GET);
-//            request.setCharset(Charset.forName("UTF-8"));
-//            HtmlPage page = webClient.getPage(request);
-//            while(!"complete".equalsIgnoreCase(page.getReadyState())) {
-//
-//            }
-//            webClient.waitForBackgroundJavaScriptStartingBefore(1000);
-//
-//            this.replaceHtmlSource(page);
-//
-//
-//            webClient.close();
-//            return page.asXml();
-//        } catch (ScriptException e) {
-//            System.out.println(e.getMessage());
-//        } catch (MalformedURLException e) {
-//            throw new RuntimeException(e);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return "";
-//    }
 
 
     public String getHttpResource(String url) {
@@ -94,8 +73,6 @@ public class PreloadWebClient {
                 }
                 reader.close();
                 return stringBuffer.toString();
-            } else {
-                System.out.println("服务器返回非正常状态： " + statusCode);
             }
             httpClient.close();  // 关闭HTTP客户端
         } catch (IOException e) {
@@ -104,25 +81,21 @@ public class PreloadWebClient {
         return "";
     }
 
-    public void replaceHtmlSource(HtmlPage page) {
-        DomNodeList<DomElement> linkElements = page.getElementsByTagName("link");
-        for(DomElement linkElement : linkElements) {
-            linkElement.setAttribute("href", linkElement.getAttribute("href").replaceFirst("^\\.", preloadWeb + "/"));
-        }
+    public void replaceHtmlSource(ChromeDriver driver) {
+        Set<String> replaceElementTagName = this.replaceElementAttributeMap.keySet();
+        for(String tagName : replaceElementTagName) {
+            String attributeName = this.replaceElementAttributeMap.get(tagName);
 
-        DomNodeList<DomElement> scriptElements = page.getElementsByTagName("script");
-        for(DomElement scriptElement : scriptElements) {
-            if(!scriptElement.getAttribute("src").equals("")) {
-                scriptElement.setAttribute("src", scriptElement.getAttribute("src").replaceFirst("^\\.", preloadWeb + "/"));
+            List<WebElement> elements = chromeDriver.findElements(By.tagName(tagName));
+            for(WebElement element : elements) {
+                JavascriptExecutor js = (JavascriptExecutor) chromeDriver;
+                String attributeValue = element.getAttribute(attributeName);
+                if(!"".equals(attributeValue) && !"null".equals(attributeValue)) {
+                    js.executeScript("arguments[0].setAttribute('" + attributeName + "', arguments[1]);", element, element.getAttribute(attributeName));
+                }
             }
+
         }
-
-        DomNodeList<DomElement> imgElements = page.getElementsByTagName("img");
-        for(DomElement imgElement : imgElements) {
-            imgElement.setAttribute("src", imgElement.getAttribute("src").replaceFirst("^\\.", preloadWeb + "/"));
-        }
-
-
     }
 
 }
