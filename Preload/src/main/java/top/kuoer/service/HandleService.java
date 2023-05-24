@@ -45,7 +45,7 @@ public class HandleService {
                 htmlSource = htmlSource.replace("#Don't Preload", "");
             }
         } else {
-            htmlSource = "404 not found";
+            htmlSource = this.preloadWebClient.preloadHtmlPage(this.preloadWeb + "/pages/error/404.html");
             // 打印日志
             this.logger.info("404：" + path + (query == null ? "" : "?" + query));
         }

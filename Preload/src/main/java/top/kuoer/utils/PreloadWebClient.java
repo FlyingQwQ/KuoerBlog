@@ -15,10 +15,12 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class PreloadWebClient {
@@ -34,12 +36,20 @@ public class PreloadWebClient {
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
+        options.addArguments("--disable-web-security");
+        options.addArguments("--no-proxy-server");
+        options.addArguments("--allow-running-insecure-content");
         options.addArguments("--disable-gpu"); // 谷歌文档提到需要加上这个属性来规避bug
         options.addArguments("--disable-software-rasterizer"); //禁用3D软件光栅化器
         options.addArguments("blink-settings=imagesEnabled=false"); //禁止加图片,如果爬取图片的话,这个不能禁用
         options.addArguments("--disable-images");
+        options.addArguments("--disable-features=CSSStableState"); //禁用css渲染
+        options.addArguments("--disable-extensions"); // 禁用扩展程序
 
         this.chromeDriver = new ChromeDriver(options);
+
+        this.chromeDriver.manage().timeouts().pageLoadTimeout(3, TimeUnit.SECONDS);
+
 
         this.replaceElementAttributeMap.put("link", "href");
         this.replaceElementAttributeMap.put("img", "src");

@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'ALTERNATIVEROCK';
+    src: url(../../fonts/ALTERNATIVEROCK.ttf);
+}
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.title {
+    font-family: 'ALTERNATIVEROCK';
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.msg {
+    text-align: center;
+    font-size: 4rem;
+    font-weight: bold;
+}

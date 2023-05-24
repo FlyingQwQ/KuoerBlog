@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'BreeSerif-Regular';
-    src: url(https://kuoer.top:666/fonts/BreeSerif-Regular-2.ttf);
+    src: url(../fonts/BreeSerif-Regular-2.ttf);
 }
 @font-face {
     font-family: 'ALTERNATIVEROCK';
-    src: url(https://kuoer.top:666/fonts/ALTERNATIVEROCK.ttf);
+    src: url(../fonts/ALTERNATIVEROCK.ttf);
 }
 
 html, body {

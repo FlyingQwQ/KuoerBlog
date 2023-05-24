@@ -1,7 +1,5 @@
 package top.kuoer.service.impl;
 
-import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
-import com.sun.org.apache.bcel.internal.generic.DCONST;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.kuoer.common.Result;
@@ -14,6 +12,7 @@ import top.kuoer.service.PostsService;
 import java.util.*;
 
 @Service
+@SuppressWarnings("all")
 public class PostsServiceImpl implements PostsService {
 
     private final PostsMapper postsMapper;
@@ -27,8 +26,11 @@ public class PostsServiceImpl implements PostsService {
 
     public Result findPostsById(int id) {
         Posts posts = this.postsMapper.findPostsById(id);
-        posts.setLabelName(labelMapper.findLabelById(posts.getLabel()).getName());
-        return new Result(ResultCode.SUCCESS, posts);
+        if(null != posts) {
+            posts.setLabelName(labelMapper.findLabelById(posts.getLabel()).getName());
+            return new Result(ResultCode.SUCCESS, posts);
+        }
+        return new Result(ResultCode.NOTFOUND, posts);
     }
 
     public Result findPostsAll() {

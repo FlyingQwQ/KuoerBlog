@@ -27,7 +27,7 @@ function loadContent() {
                 // 初始化代码高亮
                 hljs.initHighlightingOnLoad();
             } else {
-                location.href = '/';
+                location.href = './error/404.html';
             }
         }
     });
