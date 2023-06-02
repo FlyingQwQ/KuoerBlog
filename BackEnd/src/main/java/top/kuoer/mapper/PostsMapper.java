@@ -33,4 +33,7 @@ public interface PostsMapper {
     @Delete("delete from posts where id=#{id}")
     int removePosts(@Param("id") int id);
 
+    @Update("update posts SET readcount = readcount + #{number} where id = #{id};")
+    boolean addReadCount(@Param("id") int id, @Param("number") int number);
+
 }

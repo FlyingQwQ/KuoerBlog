@@ -57,15 +57,5 @@ public class PostsInfo {
         this.labelName = labelName;
     }
 
-    @Override
-    public String toString() {
-        return "PostsInfo{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", date=" + date +
-                ", year=" + year +
-                ", label=" + label +
-                ", labelName='" + labelName + '\'' +
-                '}';
-    }
+
 }

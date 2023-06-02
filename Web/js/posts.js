@@ -6,6 +6,7 @@ $(document).ready(function() {
 function loadContent() {
     let title = $('.main .posts_header .title');
     let postDate = $('.main .posts_header .date');
+    let readCount = $('.main .posts_header .read_count')
     let content = $('.main .content');
     
 
@@ -22,6 +23,8 @@ function loadContent() {
                 content.html(marked.parse(result.content));
                 let date = new Date(result.date);
                 postDate.text(date.getFullYear() + "-" + addZero(date.getMonth() + 1) + "-" + addZero(date.getDate()));
+                readCount.text(result.readcount);
+                
                 $('.commentFrame').css({'display':'block'});
 
                 // 初始化代码高亮
@@ -37,10 +40,10 @@ function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
     var vars = query.split("&");
     for (var i = 0; i < vars.length; i++) {
-            var pair = vars[i].split("=");
-            if(pair[0] == variable){
-                return pair[1];
-            }
+        var pair = vars[i].split("=");
+        if(pair[0] == variable){
+            return pair[1];
+        }
     }
     return false;
 }

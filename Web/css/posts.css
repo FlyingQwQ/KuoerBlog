@@ -4,16 +4,31 @@ img {
     border-radius: 5px;
 }
 
+.main .posts_header .group_item {
+    display: flex;
+    margin: 30px 0px 30px 0px;
+}
+
+.main .posts_header img {
+    box-shadow: none;
+}
+
 .main .posts_header .title {
     margin: 30px 0px 30px 10px;
     font-size: 30px;
     font-weight: 600;
 }
-.main .posts_header .date {
-    margin: 30px 0px 30px 0px;
-    font-size: 16px;
-    font-weight: 600;
-    font-style: italic;
+.main .posts_header .item {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+}
+.main .posts_header p {
+    margin: 0 0 0 2px;
+    font-size: 14px;
+    /* font-weight: 600; */
+    /* font-style: italic; */
+    display: inline-block;
 }
 
 .main .content {

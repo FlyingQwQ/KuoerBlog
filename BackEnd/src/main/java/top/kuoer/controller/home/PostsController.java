@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.kuoer.annotations.Authentication;
 import top.kuoer.common.Result;
-import top.kuoer.entity.Posts;
-import top.kuoer.entity.PostsInfo;
 import top.kuoer.service.PostsService;
 
-import java.util.*;
+import javax.servlet.http.HttpServletRequest;
 
 
 @RestController
@@ -26,8 +24,8 @@ public class PostsController {
     }
 
     @RequestMapping(path="/findPostsById", method = RequestMethod.GET)
-    public Result findPostsById(@RequestParam("id") int id) {
-        return postsService.findPostsById(id);
+    public Result findPostsById(@RequestParam("id") int id, HttpServletRequest request) {
+        return postsService.findPostsById(id, request);
     }
 
     @RequestMapping(path="/findPostsAll", method = RequestMethod.GET)

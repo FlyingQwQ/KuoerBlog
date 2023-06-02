@@ -51,7 +51,7 @@ class Comment {
                     let item = $(`
                         <div class="item">
                             <div class="comment">
-                                <img class="icon" src="${this.gen_text_img([50, 50], element.name)}" width="50" height="50">
+                                <img class="icon" src="${this.gen_text_img([50, 50], element.name)}" width="50" height="50" draggable="false">
                                 <div>
                                     <p class="name">${element.name}<span class="date">${newDate}</span> <a class="reply" cid="${element.id}">回复</a></p>
                                     <p class="value">${element.value}</p>

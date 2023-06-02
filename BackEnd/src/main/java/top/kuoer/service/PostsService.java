@@ -1,13 +1,8 @@
 package top.kuoer.service;
 
 import top.kuoer.common.Result;
-import top.kuoer.entity.FriendChain;
-import top.kuoer.entity.Posts;
-import top.kuoer.entity.PostsInfo;
-import top.kuoer.entity.PostsYear;
 
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 帖子服务
@@ -19,7 +14,7 @@ public interface PostsService {
      * @param id 帖子id
      * @return 帖子实体
      */
-    Result findPostsById(int id);
+    Result findPostsById(int id, HttpServletRequest request);
 
     /**
      * 查询所有帖子

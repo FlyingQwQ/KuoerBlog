@@ -9,6 +9,8 @@ public class Posts {
     private int label;
     private String labelName;
 
+    private int readcount;
+
     public int getId() {
         return id;
     }
@@ -55,5 +57,13 @@ public class Posts {
 
     public void setLabelName(String labelName) {
         this.labelName = labelName;
+    }
+
+    public int getReadcount() {
+        return readcount;
+    }
+
+    public void setReadcount(int readcount) {
+        this.readcount = readcount;
     }
 }

@@ -9,6 +9,7 @@ import top.kuoer.mapper.LabelMapper;
 import top.kuoer.mapper.PostsMapper;
 import top.kuoer.service.PostsService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Service
@@ -24,13 +25,16 @@ public class PostsServiceImpl implements PostsService {
         this.labelMapper = labelMapper;
     }
 
-    public Result findPostsById(int id) {
+    public Result findPostsById(int id, HttpServletRequest request) {
+        if(!request.getHeader("user-agent").contains("HeadlessChrome")) {
+            this.postsMapper.addReadCount(id, 1);
+        }
         Posts posts = this.postsMapper.findPostsById(id);
         if(null != posts) {
             posts.setLabelName(labelMapper.findLabelById(posts.getLabel()).getName());
             return new Result(ResultCode.SUCCESS, posts);
         }
-        return new Result(ResultCode.NOTFOUND, posts);
+        return new Result(ResultCode.NOTFOUND, null);
     }
 
     public Result findPostsAll() {
