@@ -9,6 +9,7 @@ class Comment {
         this.init();
     }
 
+    // 初始化评论
     init() {
         let commentName = '';
         commentName = (commentName = localStorage.getItem('commentName')) ? commentName : '';
@@ -32,6 +33,7 @@ class Comment {
         this.event();
     }
 
+    // 加载评论
     loadComment() {
         let comments = this.elm.find('.comments');
         $.ajax({
@@ -42,19 +44,17 @@ class Comment {
             type: 'get',
             success: (target) => {
                 comments.html('');
-                target.data.sort(function(a, b) {
-                    return b.id - a.id;
-                }).forEach(data => {
-                    let element = data.comment;
-                    let date = new Date(element.date);
+
+                target.data.forEach(data => {
+                    let date = new Date(data.date);
                     let newDate = date.getFullYear() + "年" + addZero(date.getMonth() + 1) + "月" + addZero(date.getDate()) + "日";
                     let item = $(`
                         <div class="item">
                             <div class="comment">
-                                <img class="icon" src="${this.gen_text_img([50, 50], element.name)}" width="50" height="50" draggable="false">
+                                <img class="icon" src="${this.gen_text_img([50, 50], data.name)}" width="50" height="50" draggable="false">
                                 <div>
-                                    <p class="name">${element.name}<span class="date">${newDate}</span> <a class="reply" cid="${element.id}">回复</a></p>
-                                    <p class="value">${element.value}</p>
+                                    <p class="name">${data.name}<span class="date">${newDate}</span> <a class="reply" cid="${data.id}">回复</a></p>
+                                    <p class="value">${data.value}</p>
                                 </div>
                             </div>
                             <div class="replyComment">
@@ -63,22 +63,10 @@ class Comment {
                         </div>
                     `);
 
+                    let replyEle = replyCommentsfun(data.replyComments, 0);
 
                     let replyComment = item.find('.replyComment');
-                    let replyCommentList = data.replyComments;
-                    replyCommentList.sort(function(a, b) {
-                        return b.id - a.id;
-                    }).forEach(replyCommentData => {
-                        let date = new Date(replyCommentData.date);
-                        let newDate = date.getFullYear() + "年" + addZero(date.getMonth() + 1) + "月" + addZero(date.getDate()) + "日";
-                        let replyCommentItem = $(`
-                            <div class="replyItem">
-                                <p class="name">${replyCommentData.name}<span class="date">${newDate}</span></p>
-                                <p class="value">${replyCommentData.value}</p>
-                            </div>
-                        `);
-                        replyComment.append(replyCommentItem);
-                    });
+                    replyComment.append(replyEle);
 
                     comments.append(item);
 
@@ -88,6 +76,32 @@ class Comment {
                 });
             }
         });
+
+        function replyCommentsfun(replyCommentList, index) {
+            let replyCommentEle = $('<div class="replyComment"></div>');
+            replyCommentList.forEach((comment) => {
+                let replyEle = replyCommentsfun(comment.replyComments, index + 1);
+
+                let date = new Date(comment.date);
+                let newDate = date.getFullYear() + "年" + addZero(date.getMonth() + 1) + "月" + addZero(date.getDate()) + "日";
+                let replyCommentItem = $(`
+                    <div class="replyItem">
+                        <p class="name">${comment.name}<span class="date">${newDate}</span> <a class="reply" cid="${comment.id}">回复</a></p>
+                        <p class="value">${comment.value}</p>
+                    </div>
+                `);
+                replyCommentItem.append(replyEle);
+                replyCommentEle.append(replyCommentItem);
+
+                return replyEle;
+            });
+
+            if(index > 0) {
+                return replyCommentEle;
+            } else {
+                return $(replyCommentEle.html());
+            }
+        }
     }
 
     event() {
@@ -154,6 +168,7 @@ class Comment {
         });
     }
 
+    // 生成头像
     gen_text_img(size, s) {
         let letter = s.substr(0,1).toLowerCase();
         let letterNumber = (letter.charCodeAt() - 96);
@@ -181,6 +196,7 @@ class Comment {
         return cvs.toDataURL('image/jpeg', 1);
     }
 
+    // 设置需要回复的评论
     reply(target) {
         let commentId = $(target.currentTarget).attr('cid');
         this.replyID = commentId;
@@ -191,11 +207,12 @@ class Comment {
                 'backgroundColor': 'transparent'
             });
         }
-        this.replyCommentEle = $(target.currentTarget).parent().parent().parent().parent();
+        this.replyCommentEle = $(target.currentTarget).parent().parent().find('.value').eq(0);
         this.replyCommentEle.css({
             'backgroundColor': 'rgba(61, 61, 61, 0.1)'
         });
     }
+    // 取消回复
     cancelReply() {
         this.replyID = -1;
         this.elm.find('.cancelReply').hide();

@@ -10,8 +10,7 @@ import top.kuoer.enums.ResultCode;
 import top.kuoer.mapper.CommentMapper;
 import top.kuoer.service.CommentService;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -26,18 +25,29 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Result findCommentByLabel(String label) {
 
-        List<CommentResult> commentResultList = new ArrayList<>();
         List<Comment> commentList = this.commentMapper.findCommentByLabel(label);
+        Collections.reverse(commentList);
 
         for(Comment comment : commentList) {
-            CommentResult commentResult = new CommentResult();
-            commentResult.setComment(comment);
-            commentResult.setReplyComments(this.commentMapper.findCommentByReplyId(comment.getId()));
-
-            commentResultList.add(commentResult);
+            comment.setReplyComments(new ArrayList<>());
         }
 
-        return new Result(ResultCode.SUCCESS, commentResultList);
+        for(Comment Xcomment : commentList) {
+            for(Comment Ycomment : commentList) {
+                if(Xcomment.getId() == Ycomment.getReplyid()) {
+                    Xcomment.getReplyComments().add(Ycomment);
+                }
+            }
+        }
+
+        List<Comment> cloneCommentList = new ArrayList<>();
+        for(Comment comment : commentList) {
+            if(comment.getReplyid() == -1) {
+                cloneCommentList.add(comment);
+            }
+        }
+
+        return new Result(ResultCode.SUCCESS, cloneCommentList);
     }
 
     @Override

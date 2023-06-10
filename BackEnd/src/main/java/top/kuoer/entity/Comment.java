@@ -2,6 +2,8 @@ package top.kuoer.entity;
 
 import org.springframework.lang.Nullable;
 
+import java.util.List;
+
 public class Comment {
 
     @Nullable
@@ -10,6 +12,9 @@ public class Comment {
     private String value;
     private String label;
     private long date;
+    private int replyid;
+    private List<Comment> replyComments;
+
 
     public int getId() {
         return id;
@@ -49,5 +54,34 @@ public class Comment {
 
     public void setDate(long date) {
         this.date = date;
+    }
+
+    public int getReplyid() {
+        return replyid;
+    }
+
+    public void setReplyid(int replyid) {
+        this.replyid = replyid;
+    }
+
+    public List<Comment> getReplyComments() {
+        return replyComments;
+    }
+
+    public void setReplyComments(List<Comment> replyComments) {
+        this.replyComments = replyComments;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", value='" + value + '\'' +
+                ", label='" + label + '\'' +
+                ", date=" + date +
+                ", replyid=" + replyid +
+                ", replyComments=" + replyComments +
+                '}';
     }
 }

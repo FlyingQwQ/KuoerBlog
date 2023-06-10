@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface CommentMapper {
 
-    @Select("select * from comment where label = #{label} and replyid = -1")
+    @Select("select * from comment where label = #{label}")
     List<Comment> findCommentByLabel(@Param("label") String label);
 
     @Insert("insert into comment (name, value, label, date) values (#{name}, #{value}, #{label}, #{date})")

@@ -105,48 +105,33 @@
             },
             type: 'get',
             success: (target) => {
-                target.data.sort(function(a, b) {
-                    return b.id - a.id;
-                }).forEach(data => {
-                    let element = data.comment;
-                    let date = new Date(element.date);
+                target.data.forEach(data => {
+                    let date = new Date(data.date);
                     let newDate = date.getFullYear() + "年" + addZero(date.getMonth() + 1) + "月" + addZero(date.getDate()) + "日";
                     let item = $(`
                         <div class="item">
                             <div class="comment">
-                                <p class="name">${element.name}<span class="date">${newDate}</span> <a class="delComment" pid="${element.id}">删除</a></p>
-                                <p class="value"> - ${element.value}</p>
+                                <p class="name">${data.name}<span class="date">${newDate}</span> <a class="delComment" pid="${data.id}">删除</a></p>
+                                <p class="value">${data.value}</p>
                             </div>
                             <div class="replyComment">
 
                             </div>
                         </div>
                     `);
-                    comments.append(item);
+
+                    let replyEle = replyCommentsfun(data.replyComments, 0);
 
                     let replyComment = item.find('.replyComment');
-                    let replyCommentList = data.replyComments;
-                    replyCommentList.sort(function(a, b) {
-                        return b.id - a.id;
-                    }).forEach(replyCommentData => {
-                        let date = new Date(replyCommentData.date);
-                        let newDate = date.getFullYear() + "年" + addZero(date.getMonth() + 1) + "月" + addZero(date.getDate()) + "日";
-                        let replyCommentItem = $(`
-                            <div class="replyItem">
-                                <p class="name">${replyCommentData.name}<span class="date">${newDate}</span> <a class="delComment" pid="${replyCommentData.id}">删除</a></p>
-                                <p class="value"> - ${replyCommentData.value}</p>
-                            </div>
-                        `);
-                        replyComment.append(replyCommentItem);
-                    });
+                    replyComment.append(replyEle);
 
+                    comments.append(item);
                 });
-                
+
                 $('.delComment').click((event) => {
                     let id = $(event.currentTarget).attr('pid');
                     delComment(id);
                 });
-
             }
         });
 
@@ -164,6 +149,32 @@
                 loadComment();
             }
         });
+    }
+
+    function replyCommentsfun(replyCommentList, index) {
+        let replyCommentEle = $('<div class="replyComment"></div>');
+        replyCommentList.forEach((comment) => {
+            let replyEle = replyCommentsfun(comment.replyComments, index + 1);
+
+            let date = new Date(comment.date);
+            let newDate = date.getFullYear() + "年" + addZero(date.getMonth() + 1) + "月" + addZero(date.getDate()) + "日";
+            let replyCommentItem = $(`
+                <div class="replyItem">
+                    <p class="name">${comment.name}<span class="date">${newDate}</span> <a class="delComment" pid="${comment.id}">删除</a></p>
+                    <p class="value">${comment.value}</p>
+                </div>
+            `);
+            replyCommentItem.append(replyEle);
+            replyCommentEle.append(replyCommentItem);
+
+            return replyEle;
+        });
+
+        if(index > 0) {
+            return replyCommentEle;
+        } else {
+            return $(replyCommentEle.html());
+        }
     }
 
 })();
