@@ -13,6 +13,9 @@ public class Comment {
     private String label;
     private long date;
     private int replyid;
+
+    private String recipient;
+
     private List<Comment> replyComments;
 
 
@@ -64,6 +67,14 @@ public class Comment {
         this.replyid = replyid;
     }
 
+    public String getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
+    }
+
     public List<Comment> getReplyComments() {
         return replyComments;
     }
@@ -81,6 +92,7 @@ public class Comment {
                 ", label='" + label + '\'' +
                 ", date=" + date +
                 ", replyid=" + replyid +
+                ", recipient='" + recipient + '\'' +
                 ", replyComments=" + replyComments +
                 '}';
     }

@@ -63,7 +63,7 @@ class Comment {
                         </div>
                     `);
 
-                    let replyEle = replyCommentsfun(data.replyComments, 0);
+                    let replyEle = replyCommentsfun(data.replyComments, data.id);
 
                     let replyComment = item.find('.replyComment');
                     replyComment.append(replyEle);
@@ -77,30 +77,39 @@ class Comment {
             }
         });
 
-        function replyCommentsfun(replyCommentList, index) {
-            let replyCommentEle = $('<div class="replyComment"></div>');
+        function replyCommentsfun(replyCommentList, mainCommentId) {
+            let reply = '';
             replyCommentList.forEach((comment) => {
-                let replyEle = replyCommentsfun(comment.replyComments, index + 1);
+                let replyEle = replyCommentsfun(comment.replyComments, mainCommentId);
 
                 let date = new Date(comment.date);
                 let newDate = date.getFullYear() + "年" + addZero(date.getMonth() + 1) + "月" + addZero(date.getDate()) + "日";
-                let replyCommentItem = $(`
+                
+                let recipientEle = '';
+                if(mainCommentId != comment.replyid) {
+                    recipientEle = `
+                        <span class="recipient">回复 @${comment.recipient}：</span>
+                    `;
+                }
+                
+                let replyCommentItemEle = `
                     <div class="replyItem">
-                        <p class="name">${comment.name}<span class="date">${newDate}</span> <a class="reply" cid="${comment.id}">回复</a></p>
-                        <p class="value">${comment.value}</p>
+                        <p class="name">
+                            ${comment.name} <span class="date">${newDate}</span> <a class="reply" cid="${comment.id}">回复</a>
+                        </p>
+                        <p class="value">
+                            ${recipientEle}
+                            ${comment.value}
+                        </p>
                     </div>
-                `);
-                replyCommentItem.append(replyEle);
-                replyCommentEle.append(replyCommentItem);
+                    ${replyEle}
+                `;
+                reply = reply + replyCommentItemEle;
 
                 return replyEle;
             });
 
-            if(index > 0) {
-                return replyCommentEle;
-            } else {
-                return $(replyCommentEle.html());
-            }
+            return reply;
         }
     }
 
@@ -207,7 +216,7 @@ class Comment {
                 'backgroundColor': 'transparent'
             });
         }
-        this.replyCommentEle = $(target.currentTarget).parent().parent().find('.value').eq(0);
+        this.replyCommentEle = $(target.currentTarget).parent().parent();
         this.replyCommentEle.css({
             'backgroundColor': 'rgba(61, 61, 61, 0.1)'
         });
