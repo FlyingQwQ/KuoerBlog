@@ -54,7 +54,7 @@ class Comment {
                                 <img class="icon" src="${this.gen_text_img([50, 50], data.name)}" width="50" height="50" draggable="false">
                                 <div>
                                     <p class="name">${data.name}<span class="date">${newDate}</span> <a class="reply" cid="${data.id}">回复</a></p>
-                                    <p class="value">${data.value}</p>
+                                    <p class="value"></p>
                                 </div>
                             </div>
                             <div class="replyComment">
@@ -64,6 +64,8 @@ class Comment {
                     `);
 
                     let replyEle = replyCommentsfun(data.replyComments, data.id);
+
+                    item.find('.value').text(data.value);
 
                     let replyComment = item.find('.replyComment');
                     replyComment.append(replyEle);
@@ -198,7 +200,7 @@ class Comment {
         ctx.fillStyle = colors[letterNumber > 26 ? 26 : letterNumber];
         ctx.fillRect(0, 0, size[0], size[1]);
         ctx.fillStyle = 'rgb(255,255,255)';
-        ctx.font = size[0] * 0.5 + "px HarmonyOS";
+        ctx.font = size[0] * 0.4 + "px HarmonyOS";
         ctx.textBaseline = "middle";
         ctx.textAlign = "center";
         ctx.fillText(s.substr(0,1), size[0]/2,size[1]/2);
@@ -229,5 +231,12 @@ class Comment {
         this.replyCommentEle.css({
             'backgroundColor': 'transparent'
         });
+    }
+
+    // 将html代码转成文本
+    repalceHtmlToText(str) {
+        str = str.replace(/<\/?.+?>/g, "");
+        str = str.replace(/&nbsp;/g, "");
+        return str;
     }
 }

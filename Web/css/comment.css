@@ -100,8 +100,8 @@
 .commentFrame .comments .item img {
     box-shadow: none;
     border: none;
-    border-radius: 5px;
-    border: 2px solid black;
+    border-radius: 50%;
+    border: 2px solid rgb(199, 199, 199);
 }
 .commentFrame .comments p {
     margin: 0;

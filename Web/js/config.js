@@ -1,6 +1,6 @@
 var api = 'http://localhost:8081/';
 // var api = 'https://blogapi.kuoer.top:2333/';
-var createTime = '2021 - 2023';
+var createTime = '2021 - ' + new Date().getFullYear();
 var filingNumber = '粤ICP备2022013504号';
 
 setTimeout(function() {
