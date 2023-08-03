@@ -1,6 +1,5 @@
 package top.kuoer.service;
 
-import org.apache.ibatis.annotations.Param;
 import top.kuoer.common.Result;
 import top.kuoer.entity.FriendChain;
 

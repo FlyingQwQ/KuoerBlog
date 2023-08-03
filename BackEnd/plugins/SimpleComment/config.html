@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>SimpleComment配置页面</title>
+    <link rel="stylesheet" href="../../css/lib/bootstrap.css">
+    <style>
+        .row {
+            margin-right: 0 !important;
+        }
+
+        .panel {
+            margin: 5px;
+        }
+
+        .posts .region {
+            margin: 10px 0px 0px 0px;
+        }
+        .posts .region .year {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .posts .region .item .date {
+            margin: 0;
+            font-size: 18px;
+        }
+        .posts .region .item .title {
+            font-size: 18px;
+        }
+
+        .posts .title {
+            height: max-content;
+        }
+        .posts .item {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            使用方法
+        </div>
+        <div class="panel-body">
+            点击下面的帖子超链接，就能编辑指定帖子的评论
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            选择帖子
+        </div>
+        <div class="panel-body">
+            <div class="posts">
+
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        $.ajax({
+            url: api + 'home/findPostsAll',
+            type: 'get',
+            success: function(target) {
+                Object.keys(target.data).sort(sortDown).forEach(data => {
+                    let region = $('<div class="region"></div>');
+                    let year = $('<p class="year">' + data + '</p>')
+                    region.append(year);
+
+                    target.data[data].sort(function(a, b) {
+                        return b.date - a.date;
+                    }).forEach(posts => {
+                        let time = new Date(posts.date);
+                        let item = $(`
+                            <div class="row item">
+                                <p class="date col-xs-3">${time.getMonth() + 1}月${time.getDate()}日</p>
+                                <a href="javascript:edit(${posts.id})" class="title col-xs-9">${posts.title}</a>
+                            </div>
+                    `)
+                        region.append(item);
+                    });
+                    $('.posts').append(region);
+                });
+            }
+        });
+
+        function edit(id) {
+            alert(id);
+        }
+
+        function sortDown(a,b){
+            return b-a;
+        }
+
+    </script>
+</body>
+</html>

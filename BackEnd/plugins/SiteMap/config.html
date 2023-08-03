@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SiteMap配置页面</title>
+</head>
+<body>
+    <span>前端地址</span>
+    <input class="frontEndAddressInput" type="text">
+
+    <button onclick="saveConfig()">保存配置</button>
+
+    <script src="../../js/lib/jquery-3.6.0.min.js"></script>
+    <script src="../../js/config.js"></script>
+    <script>
+        let frontEndAddressInput = $('.frontEndAddressInput');
+        function saveConfig() {
+            $.ajax({
+                url: api + 'sitemap/saveConfig',
+                type: 'get',
+                data: {
+                    frontendaddress: frontEndAddressInput.val()
+                },
+                success: function(target) {
+                    if(target == 'yes') {
+                        alert('修改完成。');
+                    } else {
+                        alert('修改失败！');
+                    }
+
+                }
+            });
+        }
+
+        function loadConfig() {
+            $.ajax({
+                url: api + 'sitemap/getPluginConfig',
+                type: 'get',
+                success: function(target) {
+                    if(target !== '') {
+                        let config = JSON.parse(target);
+                        frontEndAddressInput.val(config.frontendaddress);
+                        $('a').attr('href', config.frontendaddress + 'sitemap.txt');
+                    }
+                }
+            });
+        }
+
+        loadConfig();
+    </script>
+</body>
+</html>

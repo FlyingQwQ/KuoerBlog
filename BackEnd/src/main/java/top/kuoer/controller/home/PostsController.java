@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import top.kuoer.annotations.Authentication;
 import top.kuoer.common.Result;
 import top.kuoer.service.PostsService;
 
@@ -34,7 +33,6 @@ public class PostsController {
     }
 
     @RequestMapping(path="/addPosts", method = RequestMethod.POST)
-    @Authentication
     public Result addPosts(@RequestParam("token") String token,
                             @RequestParam("title") String title,
                             @RequestParam("content") String content,
@@ -43,7 +41,6 @@ public class PostsController {
     }
 
     @RequestMapping(path="/modifyPosts", method = RequestMethod.POST)
-    @Authentication
     public Result modifyPosts(@RequestParam("token") String token,
                               @RequestParam("id") int id,
                               @RequestParam("title") String title,
