@@ -8,12 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.kuoer.common.Result;
 import top.kuoer.entity.Admin;
-import top.kuoer.entity.QQLogin;
 import top.kuoer.enums.ResultCode;
 import top.kuoer.service.AdminService;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @RestController
 @RequestMapping(path="/admin")
@@ -32,20 +28,6 @@ public class AdminController {
     public Admin login(@RequestParam("username") String name,
                        @RequestParam("password") String password) {
         return this.adminService.login(name, password);
-    }
-
-    @RequestMapping(path = "/qqlogin", method = RequestMethod.POST)
-    public void qqLogin(QQLogin login, HttpServletResponse response) throws IOException {
-        String token = this.adminService.qqLogin(login);
-        response.sendRedirect(this.frontEndAddress + "pages/admin/index.html?token=" + token);
-    }
-
-    @RequestMapping(path = "/bindqq", method = RequestMethod.POST)
-    public void bindQQ(QQLogin login,
-                       @RequestParam("token") String token,
-                       HttpServletResponse response) throws IOException {
-        String result = this.adminService.bindQQ(token, login);
-        response.sendRedirect(this.frontEndAddress + "pages/admin/manage.html?result=" + result);
     }
 
     @RequestMapping(path = "/verification", method = RequestMethod.GET)

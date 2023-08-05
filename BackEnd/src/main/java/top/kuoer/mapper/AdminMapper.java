@@ -35,9 +35,4 @@ public interface AdminMapper {
     @Update("update admin set password=#{password} where name=#{name}")
     int modifyAdmin(@Param("name") String name, @Param("password") String password);
 
-    @Select("select * from admin where openid=#{openid}")
-    Admin findUserInfoByQqOpenId(@Param("openid") String openid);
-
-    @Update("update admin set openid=#{openid} where token=#{token}")
-    int setQqLoginOpenIdByToken(@Param("token") String token, @Param("openid") String openid);
 }

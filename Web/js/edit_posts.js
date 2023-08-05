@@ -43,6 +43,9 @@
         modifyPosts(id, title.val(), editor.getValue(), label.val());
     });
     removeBtn.click(function() {
+        if(!confirm("你确定要删除这个帖子？删除后无法恢复.")) {
+            return;
+        }
         removePosts(id);
     });
 
@@ -93,88 +96,4 @@
             }
         });
     }
-
-    function loadComment() {
-        let comments = $('.comments');
-        comments.html('');
-
-        $.ajax({
-            url: api + 'comment/findCommentByLabel',
-            data: {
-                label: id
-            },
-            type: 'get',
-            success: (target) => {
-                target.data.forEach(data => {
-                    let date = new Date(data.date);
-                    let newDate = date.getFullYear() + "年" + addZero(date.getMonth() + 1) + "月" + addZero(date.getDate()) + "日";
-                    let item = $(`
-                        <div class="item">
-                            <div class="comment">
-                                <p class="name">${data.name}<span class="date">${newDate}</span> <a class="delComment" pid="${data.id}">删除</a></p>
-                                <p class="value">${data.value}</p>
-                            </div>
-                            <div class="replyComment">
-
-                            </div>
-                        </div>
-                    `);
-
-                    let replyEle = replyCommentsfun(data.replyComments, 0);
-
-                    let replyComment = item.find('.replyComment');
-                    replyComment.append(replyEle);
-
-                    comments.append(item);
-                });
-
-                $('.delComment').click((event) => {
-                    let id = $(event.currentTarget).attr('pid');
-                    delComment(id);
-                });
-            }
-        });
-
-    }
-
-    function delComment(id) {
-        $.ajax({
-            url: api + 'comment/delComment',
-            data: {
-                token,
-                id
-            },
-            type: 'get',
-            success: (target) => {
-                loadComment();
-            }
-        });
-    }
-
-    function replyCommentsfun(replyCommentList, index) {
-        let replyCommentEle = $('<div class="replyComment"></div>');
-        replyCommentList.forEach((comment) => {
-            let replyEle = replyCommentsfun(comment.replyComments, index + 1);
-
-            let date = new Date(comment.date);
-            let newDate = date.getFullYear() + "年" + addZero(date.getMonth() + 1) + "月" + addZero(date.getDate()) + "日";
-            let replyCommentItem = $(`
-                <div class="replyItem">
-                    <p class="name">${comment.name}<span class="date">${newDate}</span> <a class="delComment" pid="${comment.id}">删除</a></p>
-                    <p class="value">${comment.value}</p>
-                </div>
-            `);
-            replyCommentItem.append(replyEle);
-            replyCommentEle.append(replyCommentItem);
-
-            return replyEle;
-        });
-
-        if(index > 0) {
-            return replyCommentEle;
-        } else {
-            return $(replyCommentEle.html());
-        }
-    }
-
 })();

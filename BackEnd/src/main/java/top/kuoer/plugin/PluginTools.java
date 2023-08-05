@@ -1,28 +1,45 @@
 package top.kuoer.plugin;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.stream.Collectors;
 
 public class PluginTools {
 
     private static PluginManager pluginManager;
-    private static final Logger log = LoggerFactory.getLogger(PluginTools.class);
+    private final Logger log = LoggerFactory.getLogger(PluginTools.class);
+    private static SqlSession sqlSession;
+    private final AppPlugin plugin;
 
-    public static void log(String str) {
+
+    public PluginTools(AppPlugin appPlugin) {
+        this.plugin = appPlugin;
+    }
+
+    public void log(String str) {
         log.info(str);
     }
 
-    public static void error(String str) {
+    public void error(String str) {
         log.error(str);
     }
 
-    public static PluginManager getPluginManager() {
+    public PluginManager getPluginManager() {
         return pluginManager;
     }
 
@@ -30,31 +47,31 @@ public class PluginTools {
         PluginTools.pluginManager = pluginManager;
     }
 
-
     /**
      * 通过模板文件合并获取html模板源代码
      * @param templateFileNames 模板文件名称列表
      * @return 合成后的模板文本
      */
-    public static String resFileTransTemplate(AppPlugin plugin, String[] templateFileNames) {
+    public String resFileTransTemplate(String[] templateFileNames) {
         StringBuilder stringBuilder = new StringBuilder();
         for(String templateFileName : templateFileNames) {
-            stringBuilder.append(readResourcetoText(plugin, templateFileName));
+            stringBuilder.append(readResourcetoText(templateFileName));
         }
         return stringBuilder.toString();
     }
 
     /**
      * 输出jar包里的资源文件到插件目录
-     * @param resourceFile
+     *
+     * @param resourceFile 资源文件名
      */
-    public static boolean jarResourceToPluginDirectory(AppPlugin plugin, String resourceFile) {
+    public void jarResourceToPluginDirectory(String resourceFile) {
         try {
             JarFile jarFile = new JarFile("plugins/" + plugin.fileName);
             JarEntry entry = jarFile.getJarEntry(resourceFile);
             if(null == entry) {
                 log("[" + plugin.name +  "] 从jar包加载资源到目录，未找到" + resourceFile + ".");
-                return false;
+                return;
             }
             if (!entry.isDirectory()) {
                 InputStream inputStream = jarFile.getInputStream(entry);
@@ -77,10 +94,9 @@ public class PluginTools {
             throw new RuntimeException(e);
         }
 
-        return true;
     }
 
-    public static String readResourcetoText(AppPlugin plugin, String resourceFile) {
+    public String readResourcetoText(String resourceFile) {
         StringBuilder sb = new StringBuilder();
         try {
             File file = new File(plugin.pluginDirectory + "/" + resourceFile);
@@ -102,11 +118,10 @@ public class PluginTools {
 
     /**
      * 写文本到文件，没有文件自动创建
-     * @param plugin
-     * @param resourceFile
-     * @param text
+     * @param resourceFile 资源文件名
+     * @param text 需要保存的文本
      */
-    public static void writeResourcetoText(AppPlugin plugin, String resourceFile, String text) {
+    public void writeResourcetoText(String resourceFile, String text) {
         try {
             File file = new File(plugin.pluginDirectory + "/" + resourceFile);
             if(!file.exists()) {
@@ -122,12 +137,65 @@ public class PluginTools {
 
     }
 
-    public static boolean fileExists(AppPlugin plugin, String resourceFile) {
+    public boolean fileExists(String resourceFile) {
         File file = new File(plugin.pluginDirectory + "/" + resourceFile);
-        if(file.exists()) {
-            return true;
+        return file.exists();
+    }
+
+    /**
+     * 通过ApplicationContext获取Bean
+     * @param var1 类.class
+     * @return 获取到的对象
+     * @param <T> class
+     */
+    public <T> T getBean(Class<T> var1) {
+        return pluginManager.getContext().getBean(var1);
+    }
+
+    /**
+     * 向Mybatis中添加一个Mapper
+     */
+    public <T> void addMapper(Class<T> var1) {
+        SqlSessionFactory session = this.getBean(SqlSessionFactory.class);
+        session.getConfiguration().addMapper(var1);
+    }
+
+    /**
+     * 从Mtbatis中获取Mapper
+     */
+    public <T> T getMapper(Class<T> var1) {
+        SqlSessionFactory session = this.getBean(SqlSessionFactory.class);
+        if(sqlSession == null) {
+            sqlSession = session.openSession();
         }
-        return false;
+        return sqlSession.getMapper(var1);
+    }
+
+    /**
+     * 获取平台的所有Controller的RequestMappingInfo，不包括插件编写的Route
+     */
+    public List<RequestMappingInfo> getAllControllerRequestMappingInfo() {
+        RequestMappingHandlerMapping requestMappingHandlerMapping = this.getBean(RequestMappingHandlerMapping.class);
+        Set<RequestMappingInfo> s = requestMappingHandlerMapping.getHandlerMethods().keySet();
+        return new ArrayList<>(s);
+    }
+
+    public String jsonObjToStr(Object object) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            return "";
+        }
+    }
+
+    public <T> T jsonStrToObj(String jsonText, Class<T> var1) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readValue(jsonText, var1);
+        } catch (JsonProcessingException e) {
+            return null;
+        }
     }
 
 

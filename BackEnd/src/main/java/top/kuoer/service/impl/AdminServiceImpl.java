@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.kuoer.common.Result;
 import top.kuoer.entity.Admin;
-import top.kuoer.entity.QQLogin;
 import top.kuoer.enums.ResultCode;
 import top.kuoer.mapper.AdminMapper;
 import top.kuoer.service.AdminService;
@@ -86,24 +85,6 @@ public class AdminServiceImpl implements AdminService {
             return admin;
         }
         return new Admin(-1, null, null, null);
-    }
-
-    @Override
-    public String qqLogin(QQLogin login) {
-        Admin currAdmin = this.adminMapper.findUserInfoByQqOpenId(login.getOpenid());
-        if(null != currAdmin) {
-            Admin loginAdmin = this.login(currAdmin.getName(), currAdmin.getPassword());
-            return loginAdmin.getToken();
-        }
-        return null;
-    }
-
-    @Override
-    public String bindQQ(String token, QQLogin login) {
-        if(this.adminMapper.setQqLoginOpenIdByToken(token, login.getOpenid()) > 0) {
-            return "qqsuccess";
-        }
-        return "qqerror";
     }
 
 }

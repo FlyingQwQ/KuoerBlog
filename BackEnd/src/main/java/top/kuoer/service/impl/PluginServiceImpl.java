@@ -6,7 +6,6 @@ import top.kuoer.common.Result;
 import top.kuoer.entity.MatchPluginDataEntity;
 import top.kuoer.enums.ResultCode;
 import top.kuoer.plugin.AppPlugin;
-import top.kuoer.plugin.PluginTools;
 import top.kuoer.plugin.annotation.ReqFindPluginData;
 import top.kuoer.plugin.event.RequestEvent;
 import top.kuoer.service.PluginService;
@@ -65,10 +64,10 @@ public class PluginServiceImpl implements PluginService {
         List<AppPlugin> appPluginList =  BlogApplication.pluginManager.getAllPlugins();
         for(AppPlugin plugin : appPluginList) {
             if(name.equals(plugin.name)) {
-                if(!PluginTools.fileExists(plugin, "config.html")) {
-                    PluginTools.jarResourceToPluginDirectory(plugin, "config.html");
+                if(!plugin.pluginTools.fileExists("config.html")) {
+                    plugin.pluginTools.jarResourceToPluginDirectory("config.html");
                 }
-                return new Result(ResultCode.SUCCESS, PluginTools.readResourcetoText(plugin, "config.html"));
+                return new Result(ResultCode.SUCCESS, plugin.pluginTools.readResourcetoText("config.html"));
             }
         }
         return new Result(ResultCode.NOTFOUND, "没有配置页面");

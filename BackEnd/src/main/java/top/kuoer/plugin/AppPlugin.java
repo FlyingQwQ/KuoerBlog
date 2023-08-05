@@ -1,11 +1,10 @@
 package top.kuoer.plugin;
 
-import top.kuoer.plugin.annotation.ReqFindPluginData;
-import top.kuoer.plugin.annotation.Route;
-import top.kuoer.plugin.event.RequestEvent;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import top.kuoer.plugin.annotation.ActionHook;
+import top.kuoer.plugin.event.ActionHookEvent;
 
 import java.io.*;
-import java.net.URL;
 
 /**
  * 开发插件的时候需要继承这个类
@@ -17,7 +16,9 @@ public class AppPlugin {
     public String mainClass = "";
     public String fileName = "";
     public String introduce = "";
-    public File pluginDirectory;
+    public File pluginDirectory = null;
+    @JsonIgnore
+    public PluginTools pluginTools = new PluginTools(this);
 
     /**
      * 插件卸载事件
@@ -53,6 +54,15 @@ public class AppPlugin {
 //
 //    }
 
+
+    /**
+     * 如果添加了@ActionHook接收不到事件，有可能被其他的插件使用该url的事件
+     * stopAction设置为true可以拦截事件，排在本插件后面的插件则接收不到事件
+     */
+    @ActionHook("/hook")
+    public void actionHook(ActionHookEvent actionHookEvent) {
+
+    }
 
 
 }

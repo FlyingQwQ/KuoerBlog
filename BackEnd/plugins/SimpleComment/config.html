@@ -37,6 +37,37 @@
         .posts .item {
             margin-bottom: 5px;
         }
+
+        .comments .item {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid rgb(182, 182, 182);
+            border-radius: 5px;
+        }
+        .comments .delComment {
+            cursor: pointer;
+        }
+        .comments .item .name {
+            margin: 0;
+            font-size: 12px;
+        }
+        .comments .item .name .date {
+            margin-left: 10px;
+        }
+        .comments .item .value {
+            margin: 0;
+            margin-left: 10px;
+            color: rgb(108, 108, 108);
+        }
+        .comments .item .replyComment {
+            margin-left: 10px;
+            padding-left: 10px;
+        }
+        .comments .item .replyComment .replyItem {
+            border-left: 2px solid black;
+            margin-top: 3px;
+            padding-left: 3px;
+        }
     </style>
 </head>
 <body>
@@ -45,7 +76,12 @@
             使用方法
         </div>
         <div class="panel-body">
-            点击下面的帖子超链接，就能编辑指定帖子的评论
+            点击下面
+        </div>
+    </div>
+
+    <div class="panel panel-default commentPanel" style="display: none">
+        <div class="panel-body comments">
         </div>
     </div>
 
@@ -78,7 +114,7 @@
                         let item = $(`
                             <div class="row item">
                                 <p class="date col-xs-3">${time.getMonth() + 1}月${time.getDate()}日</p>
-                                <a href="javascript:edit(${posts.id})" class="title col-xs-9">${posts.title}</a>
+                                <a href="javascript:loadComment(btoa('${getFrontEndAddress() + "pages/post.html?id=" + posts.id}'))" class="title col-xs-9">${posts.title}</a>
                             </div>
                     `)
                         region.append(item);
@@ -88,12 +124,97 @@
             }
         });
 
-        function edit(id) {
-            alert(id);
+        function loadComment(label) {
+            let comments = $('.comments');
+            comments.html('');
+
+            $.ajax({
+                url: api + 'comment/findCommentByLabel',
+                data: {
+                    label: label
+                },
+                type: 'get',
+                success: (target) => {
+                    console.info(target.data.length);
+                    if(target.data.length <= 0) {
+                        $('.commentPanel').hide();
+                    } else {
+                        $('.commentPanel').show();
+                    }
+                    target.data.forEach(data => {
+                        let date = new Date(data.date);
+                        let newDate = date.getFullYear() + "年" + addZero(date.getMonth() + 1) + "月" + addZero(date.getDate()) + "日";
+                        let item = $(`
+                            <div class="item">
+                                <div class="comment">
+                                    <p class="name">${data.name}<span class="date">${newDate}</span> <a class="delComment" cid="${data.id}">删除</a></p>
+                                    <p class="value">${data.value}</p>
+                                </div>
+                                <div class="replyComment"></div>
+                            </div>
+                        `);
+
+                        let replyEle = replyCommentsfun(data.replyComments, 0);
+
+                        let replyComment = item.find('.replyComment');
+                        replyComment.append(replyEle);
+
+                        comments.append(item);
+                    });
+
+                    $('.delComment').click((event) => {
+                        let cid = $(event.currentTarget).attr('cid');
+                        delComment(label, cid);
+                    });
+                }
+            });
+        }
+
+        function replyCommentsfun(replyCommentList, index) {
+            let replyCommentEle = $('<div class="replyComment"></div>');
+            replyCommentList.forEach((comment) => {
+                let replyEle = replyCommentsfun(comment.replyComments, index + 1);
+
+                let date = new Date(comment.date);
+                let newDate = date.getFullYear() + "年" + addZero(date.getMonth() + 1) + "月" + addZero(date.getDate()) + "日";
+                let replyCommentItem = $(`
+                <div class="replyItem">
+                    <p class="name">${comment.name}<span class="date">${newDate}</span> <a class="delComment" cid="${comment.id}">删除</a></p>
+                    <p class="value">${comment.value}</p>
+                </div>
+            `);
+                replyCommentItem.append(replyEle);
+                replyCommentEle.append(replyCommentItem);
+
+                return replyEle;
+            });
+
+            if(index > 0) {
+                return replyCommentEle;
+            } else {
+                return $(replyCommentEle.html());
+            }
         }
 
         function sortDown(a,b){
             return b-a;
+        }
+
+        function delComment(label, cid) {
+            $.ajax({
+                url: api + 'comment/delComment',
+                data: {
+                    id: cid
+                },
+                type: 'get',
+                success: (target) => {
+                    loadComment(label);
+                }
+            });
+        }
+
+        function getFrontEndAddress() {
+            return location.protocol + '//' + location.host + '/';
         }
 
     </script>

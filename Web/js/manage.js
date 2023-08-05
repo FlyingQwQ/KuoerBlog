@@ -20,7 +20,7 @@ $(document).ready(function() {
 // 默认加载push页面
 // loadItem('web_manage');
 loadItem('personnel');
-// loadItem('web_manage');
+// loadItem('plugin_manage');
 
 $('.main .header .homeBtn').click(function() {
     location.href = '../../index.html'
@@ -41,6 +41,11 @@ $('.main .header .webManageBtn').click(function() {
     loadItem('web_manage');
     $('.main .header .webManageBtn').addClass('active').siblings().removeClass('active');
 });
+$('.main .header .pluginManageBtn').click(function() {
+    loadItem('plugin_manage');
+    $('.main .header .pluginManageBtn').addClass('active').siblings().removeClass('active');
+});
+
 
 
 function loadItem(pageName) {
@@ -60,7 +65,7 @@ function verification(token) {
         type: 'get',
         data: {token},
         success: function(target) {
-            if(target.code == 2) {
+            if(target == '') {
                 location.href = './index.html';
             }
         }
@@ -76,15 +81,10 @@ function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
     var vars = query.split("&");
     for (var i = 0; i < vars.length; i++) {
-            var pair = vars[i].split("=");
-            if(pair[0] == variable){
-                return pair[1];
-            }
+        var pair = vars[i].split("=");
+        if(pair[0] == variable){
+            return pair[1];
+        }
     }
     return false;
-}
-
-function bindQQ() {
-    let callBack = api + 'admin/bindqq?token=' + token;
-    location.href = 'https://api.uomg.com/api/login.qq?method=login&callback=' + callBack;
 }

@@ -6,7 +6,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import top.kuoer.interceptor.PluginInterceptor;
 import top.kuoer.interceptor.VerifyInterceptor;
-import top.kuoer.plugin.PluginManager;
 import top.kuoer.service.AdminService;
 
 @Configuration
@@ -21,7 +20,6 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     /**
      * 自定义拦截器
-     * @param registry
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -37,11 +35,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .addPathPatterns("/admin/verification")
                 .addPathPatterns("/admin/bindqq")
 
-                .addPathPatterns("/comment/delComment")
-
                 .addPathPatterns("/home/addPosts")
                 .addPathPatterns("/home/modifyPosts");
-
+//                .addPathPatterns("/comment/delComment")
 
         // 插件系统要用，可以拦截所有的url
         registry.addInterceptor(new PluginInterceptor())
