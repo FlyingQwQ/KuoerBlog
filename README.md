@@ -2,6 +2,7 @@
 
 #### 介绍
 KuoerBlog一个简约的博客系统
+是一款可以安装插件的博客
 
 #### 软件架构
 使用Mybatis和SpringBoot进行开发
