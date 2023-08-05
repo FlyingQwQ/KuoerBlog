@@ -83,6 +83,9 @@ function addAdmin(name, pass) {
 }
 
 function removeAdmin(id) {
+    if(!confirm("你确定要删除这个账号？")) {
+        return;
+    }
     $.ajax({
         url: api + 'admin/removeadmin',
         type: 'get',

@@ -1,0 +1,12 @@
+<script>
+  $('.login').append(`
+      <a href="javascript:qqLogin()" class="btn qqLogin">
+            QQ登录
+      </a>
+  `);
+
+  function qqLogin() {
+    let callBack = api + 'admin/qqlogin';
+    location.href = 'https://api.uomg.com/api/login.qq?method=login&callback=' + callBack;
+  }
+</script>

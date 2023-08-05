@@ -1,0 +1,4 @@
+name: SiteMap
+main: top.kuoer.SiteMap
+version: 1.0.0
+introduce: 自动生成网站地图

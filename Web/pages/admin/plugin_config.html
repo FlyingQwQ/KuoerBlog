@@ -1,0 +1,37 @@
+<div class="content">
+    
+</div>
+
+<script src="../../js/lib/jquery-3.6.0.min.js"></script>
+<script src="../../js/config.js"></script>
+
+<script>
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){
+                return pair[1];
+            }
+        }
+        return false;
+    }
+
+    $.ajax({
+        url: api + 'plugin/getpluginconfigpage',
+        data: {
+            name: getQueryVariable('name')
+        },
+        type: 'get',
+        success: function(target) {
+            let content = $('.content');
+            if(target.data !== '') {
+                content.html(target.data);
+            } else {
+                content.html('该插件没有配置页面！');
+            }
+            
+        }
+    });
+</script>

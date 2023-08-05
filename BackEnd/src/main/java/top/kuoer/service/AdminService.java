@@ -2,7 +2,6 @@ package top.kuoer.service;
 
 import top.kuoer.common.Result;
 import top.kuoer.entity.Admin;
-import top.kuoer.entity.QQLogin;
 
 import java.util.List;
 
@@ -52,17 +51,5 @@ public interface AdminService {
      * @return
      */
     Admin _verification(String token);
-
-    /**
-     * 使用QQ登录
-     * @param login
-     * @return
-     */
-    String qqLogin(QQLogin login);
-
-    /**
-     * 绑定QQ登录
-     */
-    String bindQQ(String token, QQLogin login);
 
 }

@@ -1,0 +1,10 @@
+<script>
+  $('.main > .title').append(`
+    <a href="javascript:bindQQ()" style="margin-right: 10px; float: right; font-size: 16px">绑定QQ登录</a>
+  `);
+
+  function bindQQ() {
+    let callBack = api + 'admin/bindqq?token=' + token;
+    location.href = 'https://api.uomg.com/api/login.qq?method=login&callback=' + callBack;
+  }
+</script>

@@ -1,0 +1,4 @@
+name: SimpleComment
+main: top.kuoer.SimpleComment
+version: 1.1.2
+introduce: 一个简单的评论区插件

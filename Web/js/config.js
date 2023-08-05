@@ -10,16 +10,35 @@ setTimeout(function() {
     }
 }, 500);
 
-// 启用Bootstrap的tooltip功能
-$("[data-toggle='tooltip']").tooltip();
-
-$('#createTime').text(createTime);
-$('#filing').text(filingNumber);
-
-
 function addZero(num) {
     if(num < 10) {
         num = "0" + num;
     }
     return num;
 }
+
+function loadPlugin() {
+    $.ajax({
+        url: api + 'plugin/getplugindata',
+        data: {
+            pageURL: location.href
+        },
+        type: 'get',
+        success: function(target) {
+            if(target.code != 1) {
+                return;
+            }
+            target.data.forEach(data => {
+                $('body').append(data.template);
+            });
+        }
+    });
+}
+
+loadPlugin();
+
+// 启用Bootstrap的tooltip功能
+$("[data-toggle='tooltip']").tooltip();
+
+$('#createTime').text(createTime);
+$('#filing').text(filingNumber);

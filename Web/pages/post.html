@@ -47,9 +47,6 @@
             <!-- 这里显示帖子内容 -->
         </div>
 
-        <div class="commentFrame" style="display: none;">
-            <!-- 这里是评论区 -->
-        </div>
     </div>
 
     <div class="footer">
@@ -63,22 +60,5 @@
     <script src="../js/lib/marked.min.js"></script>
     <script src="../js/lib/highlight.min.js"></script>
     <script src="../js/posts.js"></script>
-    <script src="../js/comment.js"></script>
-
-    <script>
-        let id = getQueryVariable('id');
-        let comment = new Comment($('.commentFrame'), id);
-        comment.loadComment();
-    </script>
-
-    <script>
-        var _hmt = _hmt || [];
-        (function() {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?c2f8b1633781ce4b08b386e0f7d8103e";
-            var s = document.getElementsByTagName("script")[0]; 
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
 </body>
 </html>

@@ -1,0 +1,4 @@
+name: QQLogin
+main: top.kuoer.QQLoginMain
+version: 1.0.0
+introduce: 让后台支持QQ登录

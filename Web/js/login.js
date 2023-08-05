@@ -70,8 +70,3 @@ function getQueryVariable(variable) {
     }
     return false;
 }
-
-function qqLogin() {
-    let callBack = api + 'admin/qqlogin';
-    location.href = 'https://api.uomg.com/api/login.qq?method=login&callback=' + callBack;
-}

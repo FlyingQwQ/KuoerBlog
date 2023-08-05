@@ -19,8 +19,8 @@ function loadPosts() {
                     let time = new Date(posts.date); 
                     let item = $(`
                         <div class="row item">
-                            <p class="date col-xs-3">` + (time.getMonth() + 1) + "月" + time.getDate() + "日" + `</p>
-                            <a href="javascript:edit(` + posts.id + `)" class="title col-xs-9">` + posts.title + `</a>
+                            <p class="date col-xs-3">${time.getMonth() + 1}月${time.getDate()}日</p>
+                            <a href="javascript:edit(${posts.id})" class="title col-xs-9">${posts.title}</a>
                         </div>
                     `)
                     region.append(item);
