@@ -17,11 +17,11 @@ function addZero(num) {
     return num;
 }
 
-function loadPlugin() {
+function loadPlugin(uri) {
     $.ajax({
         url: api + 'plugin/getplugindata',
         data: {
-            pageURL: location.href
+            pageURL: uri ? uri : location.href
         },
         type: 'get',
         success: function(target) {

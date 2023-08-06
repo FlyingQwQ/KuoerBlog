@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="../../css/send_posts.css">
-<link rel="stylesheet" href="../../css/lib/dracula.css">
+<link rel="stylesheet" href="../../css/lib/vditor/index.css">
 
 <div style="overflow-x: scroll;">
     <div style="min-width: 600px;">
-        <p style="margin-top: 30px; text-align: center; font-weight: 600; font-size: 20px;">请在左边编写MarkDown语法</p>
+        <p style="margin-top: 30px; text-align: center; font-weight: 600; font-size: 20px;">发布新的文章</p>
         <div class="edit-header">
             <div class="titleFrame">
                 <input type="text" class="form-control" id="title" placeholder="帖子标题">
@@ -15,20 +15,16 @@
         <div class="labelFrame">
             <input type="text" class="form-control" id="label" placeholder="标签，不存在自动创建">
         </div>
-        <div class="edit-content">
-            <pre id="editor"></pre>
-            <div id="preview"></div>
-        </div>
+        <div id="vditor"></div>
     </div>
 </div>
 
 <script src="../../js/lib/marked.min.js"></script>
 <script src="../../js/lib/highlight.min.js"></script>
-<script src="../../js/lib/aceedit/ace.js"></script>
-<script src="../../js/lib/aceedit/ext-language_tools.js"></script>
+<script src="../../js/lib/vditor/index.min.js"></script>
 <script src="../../js/send_posts.js"></script>
 
-<script>
+<!-- <script>
     // 代码高亮初始化
     hljs.initHighlightingOnLoad();
-</script>
+</script> -->

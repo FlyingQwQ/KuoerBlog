@@ -1,30 +1,47 @@
 (function(){
     var title = $('.edit-header .titleFrame #title');
     var label = $('.labelFrame #label');
-    var preview = $('.edit-content #preview');
     var editBtn = $('.edit-header .buttonFrame .editBtn');
 
 
-    // 初始化ACE编辑器
-    ace.require("ace/ext/language_tools");
-    var editor = ace.edit("editor");
-    editor.session.setMode("ace/mode/html");
-    editor.setTheme("ace/theme/tomorrow");
-    editor.getSession().setUseWrapMode(true);
-    editor.setOptions({
-        enableBasicAutocompletion: true,
-        enableSnippets: true,
-        enableLiveAutocompletion: true
+    // 初始化Vditor编辑器
+    let vditor = new Vditor('vditor', {
+        "height": 450,
+        cache: {
+            enable: false
+        },
+        toolbar: [
+            "emoji",
+            "headings",
+            "bold",
+            "italic",
+            "strike",
+            "link",
+            "table",
+            "|",
+            "list",
+            "ordered-list",
+            "check",
+            "outdent",
+            "indent",
+            "|",
+            "quote",
+            "line",
+            "code",
+            "inline-code",
+            "insert-before",
+            "insert-after",
+            "|",
+            "undo",
+            "redo",
+            "|",
+            "fullscreen",
+            "edit-mode"
+        ]
     });
-
 
     editBtn.click(function() {
-        addPosts(title.val(), editor.getValue(), label.val());
-    });
-
-    editor.getSession().on('change', function(e) {
-        preview.html(marked.parse(editor.getValue()));
-        hljs.initHighlightingOnLoad();
+        addPosts(title.val(), vditor.getValue(), label.val());
     });
 
 

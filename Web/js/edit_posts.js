@@ -1,46 +1,52 @@
 (function(){
     var title = $('.edit-header .titleFrame #title');
     var label = $('.labelFrame #label');
-    var preview = $('.edit-content #preview');
     var editBtn = $('.edit-header .buttonFrame .editBtn');
-
-
-    // 初始化ACE编辑器
-    ace.require("ace/ext/language_tools");
-    var editor = ace.edit("editor");
-    editor.session.setMode("ace/mode/html");
-    editor.setTheme("ace/theme/tomorrow");
-    editor.getSession().setUseWrapMode(true);
-    editor.setOptions({
-        enableBasicAutocompletion: true,
-        enableSnippets: true,
-        enableLiveAutocompletion: true
-    });
-
-
     let id = localStorage.getItem('modifyId');
     let removeBtn = $('.edit-header .buttonFrame .removeBtn');
-    $.ajax({
-        url: api + 'home/findPostsById?id=' + id,
-        type: 'get',
-        success: function(result) {
-            let target = result.data;
 
-            title.val(target.title);
-            label.val(target.labelName);
-            editor.setValue(target.content);
-            preview.html(marked.parse(target.content));
-            hljs.initHighlightingOnLoad();
-
-            editor.clearSelection()
-            $(editor).resize();
-
-            // 加载评论
-            loadComment();
-        }
+    // 初始化Vditor编辑器
+    let vditor = new Vditor('vditor', {
+        "height": 450,
+        cache: {
+            enable: false
+        },
+        after () {
+            loadPostsInfo();
+        },
+        toolbar: [
+            "emoji",
+            "headings",
+            "bold",
+            "italic",
+            "strike",
+            "link",
+            "table",
+            "|",
+            "list",
+            "ordered-list",
+            "check",
+            "outdent",
+            "indent",
+            "|",
+            "quote",
+            "line",
+            "code",
+            "inline-code",
+            "insert-before",
+            "insert-after",
+            "|",
+            "undo",
+            "redo",
+            "|",
+            "fullscreen",
+            "edit-mode"
+        ]
     });
+
+
     editBtn.click(function() {
-        modifyPosts(id, title.val(), editor.getValue(), label.val());
+        modifyPosts(id, title.val(), vditor.getValue(), label.val());
     });
     removeBtn.click(function() {
         if(!confirm("你确定要删除这个帖子？删除后无法恢复.")) {
@@ -49,12 +55,21 @@
         removePosts(id);
     });
 
-
-    editor.getSession().on('change', function(e) {
-        preview.html(marked.parse(editor.getValue()));
-        hljs.initHighlightingOnLoad();
-    });
-
+    function loadPostsInfo() {
+        $.ajax({
+            url: api + 'home/findPostsById?id=' + id,
+            type: 'get',
+            success: function(result) {
+                let target = result.data;
+    
+                title.val(target.title);
+                label.val(target.labelName);
+    
+                vditor.setValue(target.content, true);
+                hljs.initHighlightingOnLoad();
+            }
+        });
+    }
 
     function modifyPosts(id, title, content, labelName) {
         $.ajax({

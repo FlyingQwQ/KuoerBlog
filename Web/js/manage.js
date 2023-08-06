@@ -17,44 +17,53 @@ $(document).ready(function() {
     
 });
 
-// 默认加载push页面
-// loadItem('web_manage');
-loadItem('personnel');
-// loadItem('plugin_manage');
+// 默认加载页面
+let uriItemName = getQueryVariable('item');
+if(!uriItemName) {
+    loadItem('personnel');
+} else {
+    loadItem(uriItemName);
+}
+
 
 $('.main .header .homeBtn').click(function() {
     location.href = '../../index.html'
 });
 $('.main .header .personnelBtn').click(function() {
     loadItem('personnel');
-    $('.main .header .personnelBtn').addClass('active').siblings().removeClass('active');
 });
 $('.main .header .postsBtn').click(function() {
     loadItem('posts_manage');
-    $('.main .header .postsBtn').addClass('active').siblings().removeClass('active');
 });
 $('.main .header .pushBtn').click(function() {
     loadItem('send_posts');
-    $('.main .header .pushBtn').addClass('active').siblings().removeClass('active');
 });
 $('.main .header .webManageBtn').click(function() {
     loadItem('web_manage');
-    $('.main .header .webManageBtn').addClass('active').siblings().removeClass('active');
 });
 $('.main .header .pluginManageBtn').click(function() {
     loadItem('plugin_manage');
-    $('.main .header .pluginManageBtn').addClass('active').siblings().removeClass('active');
 });
 
 
 
 function loadItem(pageName) {
-    verification(token)
+    verification(token);
     $.ajax({
         url: './' + pageName + '.html',
         type: 'get',
         success: function(target) {
             content.html(target);
+            history.pushState("", "", window.location.pathname + "?item=" + pageName);
+            loadPlugin(location.origin + "/manage_menu?item=" + pageName);
+        }
+    });
+    
+    let items = $('.main .header .item');
+    items.each((index, element) => {
+        let item = $(element);
+        if(item.attr('item') == pageName) {
+            item.addClass('active').siblings().removeClass('active');
         }
     });
 }

@@ -16,11 +16,9 @@ public class BlogApplication implements ApplicationListener<ApplicationEvent> {
 
     public static PluginManager pluginManager;
 
-
     public static void main(String[] args) {
         SpringApplication.run(BlogApplication.class, args);
     }
-
 
     @Override
     public void onApplicationEvent(ApplicationEvent event) {

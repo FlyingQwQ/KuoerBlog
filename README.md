@@ -1,11 +1,7 @@
 # KuoerBlog
 
 #### 介绍
-<<<<<<< HEAD
 KuoerBlog一个简约的博客系统
-=======
-KuoerBlog一个简约的博客系统  
->>>>>>> master
 是一款可以安装插件的博客
 
 #### 软件架构
