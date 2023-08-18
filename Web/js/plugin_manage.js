@@ -8,6 +8,9 @@ function loadPluginList() {
     $.ajax({
         url: api + 'plugin/findallplugininfo',
         type: 'get',
+        data: {
+            token
+        },
         success: function(target) {
             target.data.forEach(data => {
                 var tr = $(`

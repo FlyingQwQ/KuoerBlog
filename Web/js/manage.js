@@ -1,7 +1,3 @@
-// 验证登录状态
-var token = localStorage.getItem('token');
-// verification(token);
-
 let content = $('.content');
 
 $(document).ready(function() {
@@ -14,13 +10,12 @@ $(document).ready(function() {
         }
         location.href = '.';
     }
-    
 });
 
 // 默认加载页面
 let uriItemName = getQueryVariable('item');
 if(!uriItemName) {
-    loadItem('personnel');
+    loadItem('user_info');
 } else {
     loadItem(uriItemName);
 }
@@ -29,8 +24,14 @@ if(!uriItemName) {
 $('.main .header .homeBtn').click(function() {
     location.href = '../../index.html'
 });
+$('.main .header .userInfoBtn').click(function() {
+    loadItem('user_info');
+});
 $('.main .header .personnelBtn').click(function() {
     loadItem('personnel');
+});
+$('.main .header .permissionBtn').click(function() {
+    loadItem('permission');
 });
 $('.main .header .postsBtn').click(function() {
     loadItem('posts_manage');
@@ -49,6 +50,7 @@ $('.main .header .pluginManageBtn').click(function() {
 
 function loadItem(pageName) {
     verification(token);
+
     $.ajax({
         url: './' + pageName + '.html',
         type: 'get',
@@ -70,11 +72,11 @@ function loadItem(pageName) {
 
 function verification(token) {
     $.ajax({
-        url: api + 'admin/verification',
+        url: api + 'user/verification',
         type: 'get',
         data: {token},
         success: function(target) {
-            if(target == '') {
+            if(target.code == 5) {
                 location.href = './index.html';
             }
         }

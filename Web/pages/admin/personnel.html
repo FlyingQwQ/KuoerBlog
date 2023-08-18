@@ -1,7 +1,6 @@
 <link rel="stylesheet" href="../../css/personnel.css">
 
 <div class="personnel">
-
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">
@@ -15,7 +14,7 @@
                     <tr>
                         <th>ID</th>
                         <th>用户名</th>
-                        <th>Token</th>
+                        <th>权限组</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -25,13 +24,12 @@
             </table>
         </div>
     </div>
-    
     <div class="row">
         <div class="col-sm-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        修改账号
+                        修改用户
                     </h3>
                 </div>
                 <div class="panel-body">
@@ -43,28 +41,13 @@
                         <span class="input-group-addon">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</span>
                         <input type="password" class="form-control modifyPass" placeholder="待修改的密码">
                     </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">权限组</span>
+                        <select class="form-control role-select">
+
+                        </select>
+                    </div>
                     <button type="button" class="btn btn-primary modifyBtn">确认修改</button>
-                </div>
-            </div>
-        </div>
-    
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        添加账号
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <div class="input-group">
-                        <span class="input-group-addon">用户名</span>
-                        <input type="text" class="form-control addName">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</span>
-                        <input type="password" class="form-control addPass">
-                    </div>
-                    <button type="button" class="btn btn-success addBtn">添加账号</button>
                 </div>
             </div>
         </div>

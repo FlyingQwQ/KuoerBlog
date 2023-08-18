@@ -1,5 +1,6 @@
 package top.kuoer.controller.home;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,16 +34,16 @@ public class PostsController {
     }
 
     @RequestMapping(path="/addPosts", method = RequestMethod.POST)
-    public Result addPosts(@RequestParam("token") String token,
-                            @RequestParam("title") String title,
+    @RequiresPermissions("home:addPosts")
+    public Result addPosts(@RequestParam("title") String title,
                             @RequestParam("content") String content,
                             @RequestParam("labelName") String labelName) {
         return postsService.addPosts(title, content, labelName);
     }
 
     @RequestMapping(path="/modifyPosts", method = RequestMethod.POST)
-    public Result modifyPosts(@RequestParam("token") String token,
-                              @RequestParam("id") int id,
+    @RequiresPermissions("home:modifyPosts")
+    public Result modifyPosts(@RequestParam("id") int id,
                               @RequestParam("title") String title,
                               @RequestParam("content") String content,
                               @RequestParam("labelName") String labelName) {
@@ -50,8 +51,8 @@ public class PostsController {
     }
 
     @RequestMapping(path="/removePosts", method = RequestMethod.GET)
-    public Result removePosts(@RequestParam("token") String token,
-                           @RequestParam("id") int id) {
+    @RequiresPermissions("home:removePosts")
+    public Result removePosts(@RequestParam("id") int id) {
         return postsService.removePosts(id);
     }
 

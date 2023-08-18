@@ -1,5 +1,6 @@
 package top.kuoer.controller.plugin;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,6 +36,7 @@ public class PluginController {
     }
 
     @RequestMapping(path = "/findallplugininfo", method = RequestMethod.GET)
+    @RequiresPermissions("plugin:findallplugininfo")
     public Result findAllPluginInfo() {
         return this.pluginService.findAllPluginInfo();
     }

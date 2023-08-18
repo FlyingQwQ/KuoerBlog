@@ -2,23 +2,19 @@ package top.kuoer.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
-import top.kuoer.entity.Admin;
-import top.kuoer.entity.FriendChain;
+import top.kuoer.entity.User;
 
 import java.util.List;
 
 @Mapper
 @Repository
-public interface AdminMapper {
+public interface UserMapper {
 
     @Select("select id from admin where name=#{name} and password=#{password}")
-    Admin findIdByNameAndPassword(@Param("name") String name, @Param("password") String password);
+    Integer findIdByNameAndPassword(@Param("name") String name, @Param("password") String password);
 
-    @Update("update admin set token=#{token} where id=#{id}")
-    Integer setUserToken(Admin admin);
-
-    @Select("select id, name, token from admin where token=#{token}")
-    Admin findIdByToken(@Param("token") String token);
+    @Select("select * from admin where id=#{id}")
+    User getUserInfoById(@Param("id") int id);
 
     @Insert("insert into admin (name, password) values (#{name}, #{password})")
     Integer addAdmin(@Param("name") String name, @Param("password") String password);
@@ -27,7 +23,7 @@ public interface AdminMapper {
     Integer checkRepeat(@Param("name") String name);
 
     @Select("select * from admin")
-    List<Admin> adminList();
+    List<User> adminList();
 
     @Delete("delete from admin where id=#{id}")
     Integer removeAdmin(@Param("id") int id);

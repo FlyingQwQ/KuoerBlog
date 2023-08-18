@@ -1,5 +1,5 @@
 // 验证登录状态
-verification(localStorage.getItem('token'));
+verification(token);
 
 $(document).ready(function() {
     var token = getQueryVariable('token');
@@ -29,7 +29,7 @@ $('.loginBtn').click(function() {
 
 function login(username, password) {
     $.ajax({
-        url: api + 'admin/login',
+        url: api + 'user/login',
         type: 'get',
         data: {
             username,
@@ -48,7 +48,7 @@ function login(username, password) {
 
 function verification(token) {
     $.ajax({
-        url: api + 'admin/verification',
+        url: api + 'user/verification',
         type: 'get',
         data: {token},
         success: function(target) {

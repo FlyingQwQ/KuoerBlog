@@ -1,5 +1,6 @@
 package top.kuoer.controller.home;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,16 +28,19 @@ public class FriendChainController {
     }
 
     @RequestMapping(path="/modifyFriendChain", method = RequestMethod.POST)
+    @RequiresPermissions("friendchain:modify")
     public Result modifyFriendChain(int id, String title, String subTitle, String url, String icon) {
         return friendChainService.modifyFriendChain(id, title, subTitle, url, icon);
     }
 
     @RequestMapping(path="/addFriendChain", method = RequestMethod.POST)
+    @RequiresPermissions("friendchain:add")
     public Result addFriendChain(FriendChain friendChain) {
         return friendChainService.addFriendChain(friendChain);
     }
 
     @RequestMapping(path="/removeFriendChain", method = RequestMethod.GET)
+    @RequiresPermissions("friendchain:remove")
     public Result removeFriendChain(int id) {
         return friendChainService.removeFriendChain(id);
     }
