@@ -63,6 +63,7 @@ public class UserServiceImpl implements UserService {
     public List<User> userList() {
         List<User> userList = this.userMapper.adminList();
         for(User user : userList) {
+            user.setPassword("");
             this.setUserRolePermission(user);
         }
         return userList;
@@ -77,11 +78,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result modify(String name, String password) {
-        if(this.userMapper.modifyAdmin(name, password) > 0) {
-            return new Result(ResultCode.SUCCESS, null);
+    public Result modify(int userid, String password, int roleid) {
+        if(!password.isEmpty()) {
+            this.userMapper.modifyUser(userid, password);
         }
-        return new Result(ResultCode.OPERATIONFAIL, "请检查数据库是否有问题");
+        this.authorizationMapper.setUserRoleByUserId(userid, roleid);
+        return new Result(ResultCode.SUCCESS, "修改成功！");
     }
 
     @Override
@@ -91,16 +93,6 @@ public class UserServiceImpl implements UserService {
         user.setToken(token);
         this.setUserRolePermission(user);
         return new Result(ResultCode.SUCCESS, user);
-    }
-
-    @Override
-    public Result getAllRole() {
-        return new Result(ResultCode.SUCCESS, this.authorizationMapper.getAllRole());
-    }
-
-    @Override
-    public Result getAllPermission() {
-        return new Result(ResultCode.SUCCESS, this.authorizationMapper.getAllPermission());
     }
 
     public void setUserRolePermission(User user) {
@@ -121,4 +113,5 @@ public class UserServiceImpl implements UserService {
         user.setRoles(roles);
         user.setPermissions(permissions);
     }
+
 }

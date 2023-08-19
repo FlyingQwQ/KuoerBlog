@@ -28,7 +28,7 @@ public interface UserMapper {
     @Delete("delete from admin where id=#{id}")
     Integer removeAdmin(@Param("id") int id);
 
-    @Update("update admin set password=#{password} where name=#{name}")
-    int modifyAdmin(@Param("name") String name, @Param("password") String password);
+    @Update("update admin set password=#{password} where id=#{userid}")
+    int modifyUser(@Param("userid") int userid, @Param("password") String password);
 
 }

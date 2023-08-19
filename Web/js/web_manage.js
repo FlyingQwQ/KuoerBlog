@@ -149,9 +149,11 @@ function editBtn() {
                 success: function(target) {
                     if(target.code == 1) {
                         loadItem('web_manage');
-                    } else {
-                        alert('修改失败！');
                     }
+                },
+                error: function(target) {
+                    loadItem('web_manage');
+                    alert('修改失败，原因：' + target.responseJSON.data);
                 }
             });
         }

@@ -43,7 +43,7 @@ public interface UserService {
      * 修改账号
      * @return 影响数量
      */
-    Result modify(String name, String password);
+    Result modify(int userid, String password, int roleid);
 
     /**
      * 通过令牌获取该用户的所有信息
@@ -52,15 +52,4 @@ public interface UserService {
      */
     Result getUserInfo(String token);
 
-    /**
-     * 获取全部Role
-     * @return Roles
-     */
-    Result getAllRole();
-
-    /**
-     * 获取全部Permission
-     * @return Permission
-     */
-    Result getAllPermission();
 }

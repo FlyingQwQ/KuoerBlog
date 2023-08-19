@@ -54,9 +54,10 @@ public class UserController {
 
     @RequestMapping(path = "/modify", method = RequestMethod.GET)
     @RequiresPermissions("user:modify")
-    public Result modifyUser(@RequestParam("username") String userName,
-                           @RequestParam("password") String password) {
-        return this.userService.modify(userName, password);
+    public Result modifyUser(@RequestParam("userid") int userid,
+                             @RequestParam(value = "password", required = false) String password,
+                             @RequestParam("roleid") int roleid) {
+        return this.userService.modify(userid, password, roleid);
     }
 
     @RequestMapping(path = "/getuserinfo", method = RequestMethod.GET)
@@ -64,13 +65,4 @@ public class UserController {
         return this.userService.getUserInfo(token);
     }
 
-    @RequestMapping(path = "/getallrole", method = RequestMethod.GET)
-    public Result getAllRole() {
-        return this.userService.getAllRole();
-    }
-
-    @RequestMapping(path = "/getallpermission", method = RequestMethod.GET)
-    public Result getAllPermission() {
-        return this.userService.getAllPermission();
-    }
 }

@@ -43,9 +43,7 @@ function permission_display_dom() {
     let permissionDoms = $('[permission]');
     $.ajax({
         url: api + 'user/getuserinfo',
-        data: {
-            token
-        },
+        data: {token},
         type: 'get',
         success: function(target) {
             currUserInfo = target.data;

@@ -1,4 +1,23 @@
+<style>
+    #roleEditModal .input-group {
+        margin-top: 5px;
+    }
+    #roleEditModal .panel-default {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    #roleEditModal .checkbox {
+        margin-top: 0px;
+    }
+    .permission > button {
+        margin-bottom: 10px;
+    }
+</style>
+
 <div class="permission">
+    <button type="button" class="btn btn-primary">创建新角色</button>
+    <button type="button" class="btn btn-primary">创建新权限</button>
+    
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">
@@ -44,7 +63,55 @@
             </table>
         </div>
     </div>
+</div>
 
+<div class="modal fade" id="roleEditModal" tabindex="-1" role="dialog" aria-labelledby="roleEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="roleEditModalLabel">角色编辑</h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <span class="input-group-addon">角色名</span>
+                    <input type="text" class="form-control roleName" placeholder="">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">角色介绍</span>
+                    <input type="text" class="form-control roleDescription" placeholder="">
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            权限分配
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="permissionGroup">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            建议
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        要修改管理员角色权限需要注意以下权限，“修改角色拥有的权限”、“获取角色拥有的权限列表”、
+                        “获取所有的权限列表”、“获取所有的角色列表”、“后台显示权限管理入口”，如果取消了其中之一的权限会导致无法使用权限管理这个模块，
+                        之后只能通过在数据库中手动添加来恢复权限。
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary roleEditModalConfirm">确认修改</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="../../js/permission.js"></script>

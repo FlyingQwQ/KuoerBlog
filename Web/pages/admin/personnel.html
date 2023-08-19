@@ -1,4 +1,8 @@
-<link rel="stylesheet" href="../../css/personnel.css">
+<style>
+    .personnel .input-group {
+        margin-bottom: 10px;
+    }
+</style>
 
 <div class="personnel">
     <div class="panel panel-default">
@@ -24,30 +28,31 @@
             </table>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        修改用户
-                    </h3>
+
+    <div class="modal fade" id="userEditModal" tabindex="-1" role="dialog" aria-labelledby="userEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="userEditModalLabel">账号编辑</h4>
                 </div>
-                <div class="panel-body">
+                <div class="modal-body">
                     <div class="input-group">
                         <span class="input-group-addon">用户名</span>
-                        <input type="text" class="form-control modifyName" placeholder="待修改的用户名">
+                        <input type="text" class="form-control name" placeholder="" disabled="disabled">
                     </div>
                     <div class="input-group">
-                        <span class="input-group-addon">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</span>
-                        <input type="password" class="form-control modifyPass" placeholder="待修改的密码">
+                        <span class="input-group-addon">密码</span>
+                        <input type="text" class="form-control password" placeholder="不修改留空">
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">权限组</span>
-                        <select class="form-control role-select">
-
-                        </select>
+                        <select class="form-control role-select"></select>
                     </div>
-                    <button type="button" class="btn btn-primary modifyBtn">确认修改</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary userEditModalConfirm">确认修改</button>
                 </div>
             </div>
         </div>
