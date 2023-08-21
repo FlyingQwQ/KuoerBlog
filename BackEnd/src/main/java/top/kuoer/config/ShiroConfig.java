@@ -55,6 +55,8 @@ public class ShiroConfig {
         filterChain.put("/user/verification", "jwt");
         filterChain.put("/user/getuserinfo", "jwt");
         filterChain.put("/user/modify", "jwt");
+        filterChain.put("/user/add", "jwt");
+        filterChain.put("/user/remove", "jwt");
 
         filterChain.put("/auth/getallrole", "jwt");
         filterChain.put("/auth/getallpermission", "jwt");
@@ -67,8 +69,11 @@ public class ShiroConfig {
 
         filterChain.put("/home/modifyPosts", "jwt");
         filterChain.put("/home/addPosts", "jwt");
+        filterChain.put("/home/removePosts", "jwt");
 
         filterChain.put("/friendchain/modifyFriendChain", "jwt");
+        filterChain.put("/friendchain/removeFriendChain", "jwt");
+        filterChain.put("/friendchain/addFriendChain", "jwt");
 
         filterChain.put("/plugin/findallplugininfo", "jwt");
 

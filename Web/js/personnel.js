@@ -54,7 +54,7 @@ window.personnel = (function() {
             return;
         }
         $.ajax({
-            url: api + 'admin/removeadmin',
+            url: api + 'user/remove',
             type: 'get',
             data: {
                 id,
