@@ -42,7 +42,7 @@ public class ShiroConfig {
         AbstractShiroFilter abstractShiroFilter = (AbstractShiroFilter) shiroFilterFactoryBean.getObject();
         PathMatchingFilterChainResolver pathMatchingFilterChainResolver = (PathMatchingFilterChainResolver) abstractShiroFilter.getFilterChainResolver();
         DefaultFilterChainManager defaultFilterChainManager = (DefaultFilterChainManager) pathMatchingFilterChainResolver.getFilterChainManager();
-        System.out.println(defaultFilterChainManager.getFilterChains().get("/auth/modifyrolepermission").);
+        System.out.println(defaultFilterChainManager.getFilterChains().get("/auth/modifyrolepermission"));
 
 
 
