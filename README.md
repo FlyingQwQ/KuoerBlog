@@ -2,10 +2,9 @@
 
 #### 介绍
 KuoerBlog一个简约的博客系统
-是一款可以安装插件的博客
 
 #### 软件架构
-使用Mybatis和SpringBoot进行开发
+使用Mybatis、Shiro、SpringBoot、Sqlite进行开发
 
 #### 预览
 https://kuoer.top
@@ -17,3 +16,4 @@ https://kuoer.top
 2023-5-12 - SEO优化，增加预渲染代理后端  
 2023-6-02 - 增加文章阅读数量显示  
 2023-8-01 - 增加插件系统（可以随时扩展和移除功能）
+2023-8-19 - 增加Shiro，现在支持角色和权限管理了
