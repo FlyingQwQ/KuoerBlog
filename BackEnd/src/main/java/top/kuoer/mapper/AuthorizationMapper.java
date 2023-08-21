@@ -43,6 +43,12 @@ public interface AuthorizationMapper {
     @Insert("insert into rolepermission (roleid, permissionid) values (#{roleId}, #{permissionId})")
     int addRolePermission(@Param("roleId") int roleId, @Param("permissionId") int permissionId);
 
+    @Insert("insert into roles (name, description) values (#{name}, #{description})")
+    int addRole(@Param("name") String name, @Param("description") String description);
+
+    @Insert("insert into permissions (name, description) values (#{name}, #{description})")
+    int addPermission(@Param("name") String name, @Param("description") String description);
+
     @Delete("delete from roles where id=#{id}")
     int removeRole(@Param("id") int roleId);
 

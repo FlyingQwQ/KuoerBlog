@@ -1,5 +1,5 @@
 <style>
-    #roleEditModal .input-group {
+    .modal .input-group {
         margin-top: 5px;
     }
     #roleEditModal .panel-default {
@@ -15,8 +15,8 @@
 </style>
 
 <div class="permission">
-    <button type="button" class="btn btn-primary">创建新角色</button>
-    <button type="button" class="btn btn-primary">创建新权限</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newRoleModal">创建新角色</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPerissionModal">创建新权限</button>
     
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -43,9 +43,7 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">
-                权限列表
-            </h3>
+            <h3 class="panel-title">权限列表</h3>
         </div>
         <div class="panel-body"  style="overflow-x: scroll;">
             <table class="table table-hover permission-table">
@@ -83,21 +81,15 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">
-                            权限分配
-                        </h3>
+                        <h3 class="panel-title">权限分配</h3>
                     </div>
                     <div class="panel-body">
-                        <div class="permissionGroup">
-
-                        </div>
+                        <div class="permissionGroup"></div>
                     </div>
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">
-                            建议
-                        </h3>
+                        <h3 class="panel-title">建议</h3>
                     </div>
                     <div class="panel-body">
                         要修改管理员角色权限需要注意以下权限，“修改角色拥有的权限”、“获取角色拥有的权限列表”、
@@ -108,10 +100,64 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary roleEditModalConfirm">确认修改</button>
+                <button type="button" class="btn btn-primary confirm">确认修改</button>
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="newRoleModal" tabindex="-1" role="dialog" aria-labelledby="newRoleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="newRoleModalLabel">创建新的角色</h4>
+			</div>
+			<div class="modal-body">
+                <div class="input-group">
+                    <span class="input-group-addon">角色名</span>
+                    <input type="text" class="form-control roleName" placeholder="不能留空">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">角色介绍</span>
+                    <input type="text" class="form-control roleDescription" placeholder="不能留空">
+                </div>
+            </div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-primary confirm">提交</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="newPerissionModal" tabindex="-1" role="dialog" aria-labelledby="newPerissionModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="newPerissionModalLabel">创建新的权限</h4>
+			</div>
+			<div class="modal-body">
+                <div class="input-group">
+                    <span class="input-group-addon">权限名</span>
+                    <input type="text" class="form-control perissionName" placeholder="不能留空">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">权限介绍</span>
+                    <input type="text" class="form-control perissionDescription" placeholder="不能留空">
+                </div>
+            </div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-primary confirm">提交</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script src="../../js/permission.js"></script>

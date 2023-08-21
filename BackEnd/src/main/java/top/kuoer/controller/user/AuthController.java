@@ -48,13 +48,26 @@ public class AuthController {
     }
 
     @RequestMapping(path = "/removerole", method = RequestMethod.POST)
+    @RequiresPermissions("auth:removerole")
     public Result removeRole(@RequestParam("roleId") int roleid) {
         return this.authService.removeRole(roleid);
     }
 
     @RequestMapping(path = "/removeperission", method = RequestMethod.POST)
+    @RequiresPermissions("auth:removeperission")
     public Result removePerission(@RequestParam("permissionId") int permissionId) {
         return this.authService.removePerission(permissionId);
+    }
+
+    @RequestMapping(path = "/addrole", method = RequestMethod.POST)
+    @RequiresPermissions("auth:addrole")
+    public Result addRole(@RequestParam("name") String name, @RequestParam("description") String description) {
+        return this.authService.addRole(name, description);
+    }
+    @RequestMapping(path = "/addperission", method = RequestMethod.POST)
+    @RequiresPermissions("auth:addperission")
+    public Result addPerission(@RequestParam("name") String name, @RequestParam("description") String description) {
+        return this.authService.addPerission(name, description);
     }
 
 }

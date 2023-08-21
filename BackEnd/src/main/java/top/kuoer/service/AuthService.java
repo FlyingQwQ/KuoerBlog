@@ -47,4 +47,20 @@ public interface AuthService {
      */
     Result removePerission(int permissionId);
 
+    /**
+     * 添加新的权限
+     * @param name 权限名
+     * @param description 权限介绍
+     * @return 是否成功
+     */
+    Result addPerission(String name, String description);
+
+    /**
+     * 添加新的角色
+     * @param name 角色名
+     * @param description 角色介绍
+     * @return 是否成功
+     */
+    Result addRole(String name, String description);
+
 }

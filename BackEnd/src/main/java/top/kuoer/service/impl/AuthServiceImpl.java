@@ -48,7 +48,7 @@ public class AuthServiceImpl implements AuthService {
         this.authorizationMapper.setRoleInfoByRoleId(roleid, roleName, roleDescription);
         this.authorizationMapper.clearAllRolePermissionByRoleId(roleid);
         for (String permissionid : permissionidList) {
-            if(!permissionid.equals("")) {
+            if(!permissionid.isEmpty()) {
                 this.authorizationMapper.addRolePermission(roleid, Integer.parseInt(permissionid));
             }
         }
@@ -70,6 +70,22 @@ public class AuthServiceImpl implements AuthService {
             return new Result(ResultCode.SUCCESS, "删除成功！");
         }
         return new Result(ResultCode.OPERATIONFAIL, "删除失败！");
+    }
+
+    @Override
+    public Result addPerission(String name, String description) {
+        if(this.authorizationMapper.addPermission(name, description) > 0) {
+            return new Result(ResultCode.SUCCESS, "添加成功！");
+        }
+        return new Result(ResultCode.OPERATIONFAIL, "添加失败！");
+    }
+
+    @Override
+    public Result addRole(String name, String description) {
+        if(this.authorizationMapper.addRole(name, description) > 0) {
+            return new Result(ResultCode.SUCCESS, "添加成功！");
+        }
+        return new Result(ResultCode.OPERATIONFAIL, "添加失败！");
     }
 
 }

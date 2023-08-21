@@ -13,6 +13,7 @@ window.permission = (function() {
             success: function(target) {
                 if(target.code == 1) {
                     let tbody = roles_table_dom.find('tbody');
+                    roles = target.data;
                     target.data.forEach((role) => {
                         var tr = $(`
                             <tr>
@@ -91,6 +92,7 @@ window.permission = (function() {
         });
     }
 
+    // 编辑角色模态框
     let roleid;
     $('#roleEditModal').on('show.bs.modal', function (event) {
         let tds = $(event.relatedTarget).parent().parent().find('td');
@@ -99,8 +101,8 @@ window.permission = (function() {
         let roleDescription = tds[2].innerText;
         let permissionGroupDom = $(this).find('.permissionGroup');
 
-        $('.roleName').val(roleName);
-        $('.roleDescription').val(roleDescription);
+        $(this).find('.roleName').val(roleName);
+        $(this).find('.roleDescription').val(roleDescription);
 
         permissionGroupDom.html('');
         permissions.forEach((permission) => {
@@ -125,10 +127,8 @@ window.permission = (function() {
             }
         });
     })
-
-    $('.roleEditModalConfirm').click(function() {
+    $('#roleEditModal .confirm').click(function() {
         let checkedPermissionIds = [];
-        
         $('#roleEditModal .checkbox input:checked').each(function() {
             checkedPermissionIds.push($(this).val());
         });
@@ -152,6 +152,57 @@ window.permission = (function() {
             }
         });
     });
+
+
+    // 添加新角色模态框
+    $('#newRoleModal .confirm').click(function() {
+        let roleName = $('#newRoleModal .roleName').val();
+        let roleDescription = $('#newRoleModal .roleDescription').val();
+        if(roleName != '' && roleDescription != '') {
+            $.ajax({
+                url: api + 'auth/addrole',
+                type: 'post',
+                data: {
+                    token, roleid,
+                    name: roleName,
+                    description: roleDescription
+                },
+                success: function(target) {
+                    if(target.code == 1) {
+                        location.reload();
+                    }   
+                }
+            });
+        } else {
+            alert('不能留空!');
+        }
+    });
+
+    // 添加新权限模态框
+    $('#newPerissionModal .confirm').click(function() {
+        let perissionName = $('#newPerissionModal .perissionName').val();
+        let perissionDescription = $('#newPerissionModal .perissionDescription').val();
+        if(perissionName != '' && perissionDescription != '') {
+            $.ajax({
+                url: api + 'auth/addperission',
+                type: 'post',
+                data: {
+                    token, roleid,
+                    name: perissionName,
+                    description: perissionDescription
+                },
+                success: function(target) {
+                    if(target.code == 1) {
+                        location.reload();
+                    }   
+                }
+            });
+        } else {
+            alert('不能留空!');
+        }
+    });
+
+
 
     loadRoles();
     loadPermissions();

@@ -45,16 +45,19 @@ function permission_display_dom() {
         url: api + 'user/getuserinfo',
         data: {token},
         type: 'get',
+        async: false,
         success: function(target) {
-            currUserInfo = target.data;
-            target.data.permissions.forEach((permission) => {
-                permissionDoms.each((index, dom) => {
-                    let testDom = $(dom)
-                    if(testDom.attr('permission') == permission.name) {
-                        testDom.show();
-                    }
+            if(target.code == 1) {
+                currUserInfo = target.data;
+                target.data.permissions.forEach((permission) => {
+                    permissionDoms.each((index, dom) => {
+                        let testDom = $(dom)
+                        if(testDom.attr('permission') == permission.name) {
+                            testDom.show();
+                        }
+                    });
                 });
-            });
+            }
         }
     });
 }

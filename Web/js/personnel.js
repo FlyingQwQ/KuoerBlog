@@ -90,18 +90,18 @@ window.personnel = (function() {
     }
     getAllRole();
 
+    // 编辑用户
     let editUserId;
     $('#userEditModal').on('show.bs.modal', function (event) {
         let tds = $(event.relatedTarget).parent().parent().find('td');
         editUserId = tds[0].innerText;
-        $('#userEditModal .name').val(tds[1].innerText);
-        $('#userEditModal .password').val('');
-        $("#userEditModal .role-select > option").filter(function() {
+        $(this).find('.name').val(tds[1].innerText);
+        $(this).find('.password').val('');
+        $(this).find(".role-select > option").filter(function() {
             return $(this).text() === tds[2].innerText;
         }).prop("selected", true);
     });
-
-    $('.userEditModalConfirm').click(function() {
+    $('#userEditModal .confirm').click(function() {
         if(editUserId == '') {
             return;
         }

@@ -4,6 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.mgt.FilterChainManager;
+import org.apache.shiro.web.filter.mgt.FilterChainResolver;
+import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
@@ -198,6 +205,13 @@ public class PluginTools {
         }
     }
 
-
+//    public void test() throws Exception {
+//        DefaultWebSecurityManager securityManager = (DefaultWebSecurityManager) SecurityUtils.getSecurityManager();
+//        ShiroFilterFactoryBean a = null;
+//        AbstractShiroFilter abstractShiroFilter = (AbstractShiroFilter) a.getObject();
+//        PathMatchingFilterChainResolver pathMatchingFilterChainResolver = (PathMatchingFilterChainResolver)abstractShiroFilter.getFilterChainResolver();
+//        FilterChainManager filterChainManager = pathMatchingFilterChainResolver.getFilterChainManager();
+//        filterChainManager.getFilters().clear();
+//    }
 
 }

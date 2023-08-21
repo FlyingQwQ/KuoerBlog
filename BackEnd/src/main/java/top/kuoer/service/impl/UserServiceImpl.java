@@ -91,6 +91,7 @@ public class UserServiceImpl implements UserService {
         int id = Integer.parseInt(Objects.requireNonNull(JwtUtil.getInfo(token, "id")));
         User user = this.userMapper.getUserInfoById(id);
         user.setToken(token);
+        user.setPassword("");
         this.setUserRolePermission(user);
         return new Result(ResultCode.SUCCESS, user);
     }
