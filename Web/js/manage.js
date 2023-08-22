@@ -10,16 +10,17 @@ $(document).ready(function() {
         }
         location.href = '.';
     }
+
+    // 默认加载页面
+    let uriItemName = getQueryVariable('item');
+    if(!uriItemName) {
+        loadItem('user_info');
+    } else {
+        loadItem(uriItemName);
+    }
+
+    $('.title .userName').text(currUserInfo.name );
 });
-
-// 默认加载页面
-let uriItemName = getQueryVariable('item');
-if(!uriItemName) {
-    loadItem('user_info');
-} else {
-    loadItem(uriItemName);
-}
-
 
 $('.main .header .homeBtn').click(function() {
     location.href = '../../index.html'

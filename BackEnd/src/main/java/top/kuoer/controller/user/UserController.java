@@ -65,4 +65,11 @@ public class UserController {
         return this.userService.getUserInfo(token);
     }
 
+
+    @RequestMapping(path = "/test", method = RequestMethod.GET)
+    @RequiresPermissions("ttt")
+    public String say() {
+        return "233";
+    }
+
 }

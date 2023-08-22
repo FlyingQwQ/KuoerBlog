@@ -57,6 +57,9 @@ html, body {
 .main .title {
     height: 50px;
     font-size: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .main .content {
     margin-top: 5px;

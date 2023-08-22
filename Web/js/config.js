@@ -27,6 +27,7 @@ function loadPlugin(uri) {
             pageURL: uri ? uri : location.href
         },
         type: 'get',
+        async: false,
         success: function(target) {
             if(target.code != 1) {
                 return;

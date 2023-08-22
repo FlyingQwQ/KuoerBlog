@@ -39,12 +39,10 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setFilters(filterMap);
         shiroFilterFactoryBean.setFilterChainDefinitionMap(getStringStringMap());
 
-        AbstractShiroFilter abstractShiroFilter = (AbstractShiroFilter) shiroFilterFactoryBean.getObject();
-        PathMatchingFilterChainResolver pathMatchingFilterChainResolver = (PathMatchingFilterChainResolver) abstractShiroFilter.getFilterChainResolver();
-        DefaultFilterChainManager defaultFilterChainManager = (DefaultFilterChainManager) pathMatchingFilterChainResolver.getFilterChainManager();
-        System.out.println(defaultFilterChainManager.getFilterChains().get("/auth/modifyrolepermission"));
-
-
+//        AbstractShiroFilter abstractShiroFilter = (AbstractShiroFilter) shiroFilterFactoryBean.getObject();
+//        PathMatchingFilterChainResolver pathMatchingFilterChainResolver = (PathMatchingFilterChainResolver) abstractShiroFilter.getFilterChainResolver();
+//        DefaultFilterChainManager defaultFilterChainManager = (DefaultFilterChainManager) pathMatchingFilterChainResolver.getFilterChainManager();
+//        System.out.println(defaultFilterChainManager.getFilterChains().get("/auth/modifyrolepermission"));
 
         return shiroFilterFactoryBean;
     }
@@ -57,6 +55,7 @@ public class ShiroConfig {
         filterChain.put("/user/modify", "jwt");
         filterChain.put("/user/add", "jwt");
         filterChain.put("/user/remove", "jwt");
+        filterChain.put("/user/test", "jwt");
 
         filterChain.put("/auth/getallrole", "jwt");
         filterChain.put("/auth/getallpermission", "jwt");
