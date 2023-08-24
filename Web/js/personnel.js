@@ -124,6 +124,29 @@ window.personnel = (function() {
         });
     });
 
+    // 创建新用户
+    $('#createUserModal .confirm').click(function() {
+        let name = $('#createUserModal .name').val();
+        let password = $('#createUserModal .password').val();
+        let roleid = $('#createUserModal .role-select option:selected').val();
+
+        if(name == "" || password == "" || roleid == "") {
+            alert('信息不能留空！');
+            return;
+        }
+
+        $.ajax({
+            url: api + 'user/add',
+            type: 'get',
+            data: { name, password, roleid, token },
+            success: function(target) {
+                if(target.code == 1) {
+                    location.reload();
+                }
+            }
+        });
+    });
+
     return {
         removeAdmin
     }

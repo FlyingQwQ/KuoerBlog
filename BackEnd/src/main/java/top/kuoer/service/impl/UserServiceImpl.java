@@ -49,10 +49,13 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Result add(String userName, String password) {
-        if(null == this.userMapper.checkRepeat(userName)) {
-            if(this.userMapper.addAdmin(userName, password) > 0) {
-                return new Result(ResultCode.SUCCESS, null);
+    public Result add(String name, String password, int roleid) {
+        if(null == this.userMapper.checkRepeat(name)) {
+            this.userMapper.addUser(name, password);
+            Integer userId = this.userMapper.checkRepeat(name);
+            if(null != userId) {
+                this.authorizationMapper.addUserRole(userId, roleid);
+                return new Result(ResultCode.SUCCESS, "创建成功！");
             }
             return new Result(ResultCode.OPERATIONFAIL, "请检查数据库是否有问题");
         }
@@ -72,7 +75,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result remove(int id) {
         if(this.userMapper.removeAdmin(id) > 0) {
-            return new Result(ResultCode.SUCCESS, null);
+            this.authorizationMapper.removeUserRoleByUserId(id);
+            return new Result(ResultCode.SUCCESS, "删除成功！");
         }
         return new Result(ResultCode.OPERATIONFAIL, "请检查数据库是否有问题");
     }

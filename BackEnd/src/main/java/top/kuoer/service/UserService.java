@@ -24,7 +24,7 @@ public interface UserService {
      * 添加新管理
      * @return 影响数量
      */
-    Result add(String userName, String password);
+    Result add(String name, String password, int roleid);
 
     /**
      * 管理员列表

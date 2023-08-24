@@ -35,9 +35,10 @@ public class UserController {
 
     @RequestMapping(path = "/add", method = RequestMethod.GET)
     @RequiresPermissions("user:add")
-    public Result addAdmin(@RequestParam("username") String username,
-                        @RequestParam("password") String password) {
-        return this.userService.add(username, password);
+    public Result addAdmin(@RequestParam("name") String name,
+                           @RequestParam("password") String password,
+                           @RequestParam("roleid") int roleid) {
+        return this.userService.add(name, password, roleid);
     }
 
     @RequestMapping(path = "/userlist", method = RequestMethod.GET)
@@ -63,13 +64,6 @@ public class UserController {
     @RequestMapping(path = "/getuserinfo", method = RequestMethod.GET)
     public Result getUserInfo(@RequestParam("token") String token) {
         return this.userService.getUserInfo(token);
-    }
-
-
-    @RequestMapping(path = "/test", method = RequestMethod.GET)
-    @RequiresPermissions("ttt")
-    public String say() {
-        return "233";
     }
 
 }

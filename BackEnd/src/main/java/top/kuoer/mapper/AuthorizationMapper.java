@@ -19,6 +19,12 @@ public interface AuthorizationMapper {
     @Update("update userrole set roleid=#{roleid} where userid=#{userid}")
     int setUserRoleByUserId(@Param("userid") int userid, @Param("roleid") int roleid);
 
+    @Insert("insert into userrole (userid, roleid) values (#{userid}, #{roleid})")
+    int addUserRole(@Param("userid") int userid, @Param("roleid") int roleid);
+
+    @Delete("delete from userrole where userid=#{userid}")
+    int removeUserRoleByUserId(@Param("userid") int userid);
+
     @Select("select * from rolepermission where roleid=#{roleid}")
     List<RolePermission> getRolePerissionByRoleId(int roleid);
 

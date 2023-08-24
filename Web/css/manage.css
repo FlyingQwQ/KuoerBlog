@@ -54,7 +54,7 @@ html, body {
 }
 
 
-.main .title {
+.main > .title {
     height: 50px;
     font-size: 25px;
     display: flex;

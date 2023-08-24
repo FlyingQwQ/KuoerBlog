@@ -55,7 +55,6 @@ public class ShiroConfig {
         filterChain.put("/user/modify", "jwt");
         filterChain.put("/user/add", "jwt");
         filterChain.put("/user/remove", "jwt");
-        filterChain.put("/user/test", "jwt");
 
         filterChain.put("/auth/getallrole", "jwt");
         filterChain.put("/auth/getallpermission", "jwt");

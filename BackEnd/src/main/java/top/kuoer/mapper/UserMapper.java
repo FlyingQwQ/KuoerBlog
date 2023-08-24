@@ -17,7 +17,7 @@ public interface UserMapper {
     User getUserInfoById(@Param("id") int id);
 
     @Insert("insert into admin (name, password) values (#{name}, #{password})")
-    Integer addAdmin(@Param("name") String name, @Param("password") String password);
+    Integer addUser(@Param("name") String name, @Param("password") String password);
 
     @Select("select id from admin where name=#{name}")
     Integer checkRepeat(@Param("name") String name);

@@ -1,10 +1,16 @@
 <style>
-    .personnel .input-group {
+    .modal .input-group {
+        margin-bottom: 10px;
+    }
+
+    .personnel > button {
         margin-bottom: 10px;
     }
 </style>
 
 <div class="personnel">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createUserModal">创建用户</button>
+
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">
@@ -18,7 +24,7 @@
                     <tr>
                         <th>ID</th>
                         <th>用户名</th>
-                        <th>权限组</th>
+                        <th>角色</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -28,32 +34,61 @@
             </table>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="userEditModal" tabindex="-1" role="dialog" aria-labelledby="userEditModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="userEditModalLabel">账号编辑</h4>
+<div class="modal fade" id="userEditModal" tabindex="-1" role="dialog" aria-labelledby="userEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="userEditModalLabel">用户编辑</h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <span class="input-group-addon">用户名</span>
+                    <input type="text" class="form-control name" placeholder="" disabled="disabled">
                 </div>
-                <div class="modal-body">
-                    <div class="input-group">
-                        <span class="input-group-addon">用户名</span>
-                        <input type="text" class="form-control name" placeholder="" disabled="disabled">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon">密码</span>
-                        <input type="text" class="form-control password" placeholder="不修改留空">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon">权限组</span>
-                        <select class="form-control role-select"></select>
-                    </div>
+                <div class="input-group">
+                    <span class="input-group-addon">密码</span>
+                    <input type="text" class="form-control password" placeholder="不修改留空">
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary confirm">确认修改</button>
+                <div class="input-group">
+                    <span class="input-group-addon">角色</span>
+                    <select class="form-control role-select"></select>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary confirm">确认修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="createUserModalLabel">创建新的用户</h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <span class="input-group-addon">用户名</span>
+                    <input type="text" class="form-control name" placeholder="">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">密码</span>
+                    <input type="text" class="form-control password" placeholder="">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">角色</span>
+                    <select class="form-control role-select"></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary confirm">确认创建</button>
             </div>
         </div>
     </div>
