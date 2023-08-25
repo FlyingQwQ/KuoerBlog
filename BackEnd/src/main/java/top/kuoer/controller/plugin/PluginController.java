@@ -30,7 +30,7 @@ public class PluginController {
      * @param response
      * @return
      */
-    @RequestMapping(path = "/getplugindata", method = RequestMethod.GET)
+    @RequestMapping(path = "/getplugindata", method = RequestMethod.POST)
     public Result pageFindPlugin(String pageURL, HttpServletRequest request, HttpServletResponse response) {
         return this.pluginService.pageFindPlugin(pageURL, new RequestEvent(request, response));
     }
@@ -42,6 +42,7 @@ public class PluginController {
     }
 
     @RequestMapping(path = "/getpluginconfigpage", method = RequestMethod.GET)
+    @RequiresPermissions("plugin:pluginconfigpage")
     public Result getPluginConfigPage(String name) {
         return this.pluginService.getPluginConfigPage(name);
     }

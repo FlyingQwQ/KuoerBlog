@@ -24,9 +24,10 @@ function loadPlugin(uri) {
     $.ajax({
         url: api + 'plugin/getplugindata',
         data: {
-            pageURL: uri ? uri : location.href
+            pageURL: uri ? uri : location.href,
+            token
         },
-        type: 'get',
+        type: 'post',
         async: false,
         success: function(target) {
             if(target.code != 1) {

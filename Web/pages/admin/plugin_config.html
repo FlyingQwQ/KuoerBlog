@@ -21,7 +21,8 @@
     $.ajax({
         url: api + 'plugin/getpluginconfigpage',
         data: {
-            name: getQueryVariable('name')
+            name: getQueryVariable('name'),
+            token
         },
         type: 'get',
         success: function(target) {

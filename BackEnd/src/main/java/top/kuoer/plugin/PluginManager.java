@@ -1,5 +1,9 @@
 package top.kuoer.plugin;
 
+import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.mgt.DefaultFilterChainManager;
+import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;
+import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
@@ -27,6 +31,9 @@ public class PluginManager {
     private ApplicationContext context;
     public List<AppPlugin> plugins = new ArrayList<>();
     private static final Logger log = LoggerFactory.getLogger(PluginManager.class);
+    private final ShiroFilterFactoryBean shiroFilterFactoryBean;
+
+
 
     public PluginManager(ApplicationContext context) {
 
@@ -42,6 +49,7 @@ public class PluginManager {
         }
 
         this.context = context;
+        this.shiroFilterFactoryBean = context.getBean(ShiroFilterFactoryBean.class);
 
         PluginTools.setPluginManager(this);
 
@@ -64,6 +72,7 @@ public class PluginManager {
     }
 
     private void initPlugin() {
+        this.initPluginShiroFilterChain(plugins);
         for(AppPlugin plugin : plugins) {
             plugin.onEnable();
         }
@@ -108,8 +117,6 @@ public class PluginManager {
                 this.plugins.add(appPlugin);
 
 
-
-
                 log.info("[" + appPlugin.name +  "] 当前版本：" + appPlugin.version);
             }
         } catch (MalformedURLException | ClassNotFoundException | InvocationTargetException | NoSuchMethodException |
@@ -130,8 +137,10 @@ public class PluginManager {
         return this.plugins;
     }
 
-
-    // 添加动作钩子，有动作的时候就会通知所有加了 @ActionHook 注解的方法
+    /**
+     * 监听平台自带的Controller接口
+     * 添加动作钩子，有动作的时候就会通知所有加了 @ActionHook 注解的方法
+     */
     public ActionHookEvent triggerActionHook(ProceedingJoinPoint joinPoint) throws InvocationTargetException, IllegalAccessException {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         RequestMapping requestMapping = signature.getMethod().getAnnotation(RequestMapping.class);
@@ -155,6 +164,49 @@ public class PluginManager {
 
         return newActionHookEvent;
     }
+
+    /**
+     * 初始化检测插件的事件注解中有没有需要权限的，有的话添加进Shiro过滤链中
+     */
+    public void initPluginShiroFilterChain(List<AppPlugin> appPluginList) {
+        log.info("正在添加插件事件注解中的URI到Shiro过滤链.");
+        try {
+            AbstractShiroFilter abstractShiroFilter = this.shiroFilterFactoryBean.getObject();
+            if(null == abstractShiroFilter) {
+                log.error("动态添加Shiro过滤链时出现异常，AbstractShiroFilter值为null");
+                return;
+            }
+            PathMatchingFilterChainResolver pathMatchingFilterChainResolver = (PathMatchingFilterChainResolver) abstractShiroFilter.getFilterChainResolver();
+            DefaultFilterChainManager defaultFilterChainManager = (DefaultFilterChainManager) pathMatchingFilterChainResolver.getFilterChainManager();
+
+            Map<String, String> chains = new HashMap<>(shiroFilterFactoryBean.getFilterChainDefinitionMap());
+
+            shiroFilterFactoryBean.getFilterChainDefinitionMap().clear();
+            defaultFilterChainManager.getFilterChains().clear();
+
+            for(AppPlugin plugin : appPluginList) {
+                for(Method method : plugin.getClass().getMethods()) {
+                    if (method.isAnnotationPresent(Route.class)) {
+                        Route annotation = method.getAnnotation(Route.class);
+                        if(annotation.permissions().length > 0) {
+                            log.info("[" + plugin.name +  "] 检测到'" + annotation.value() + "'需要权限，已添加到Shiro过滤链中.");
+                            chains.put(annotation.value(), "jwt");
+                        }
+                    }
+                }
+            }
+
+            for (Map.Entry<String, String> entry : chains.entrySet()) {
+                defaultFilterChainManager.createChain(entry.getKey(), entry.getValue());
+            }
+
+        } catch (Exception e) {
+            log.error("动态添加Shiro过滤链时出现异常.");
+        }
+
+    }
+
+
 
     /**
      * 检擦两个字符串数据有没有相同的字符串

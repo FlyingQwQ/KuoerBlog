@@ -5,7 +5,8 @@ public enum ResultCode {
     NOAUTH(2, "权限不足"),
     OPERATIONFAIL(3, "操作失败"),
     NOTFOUND(4, "找不到数据"),
-    AUTHERROR(5, "认证时出现问题");
+    AUTHERROR(5, "认证时出现问题"),
+    LOGIN(6, "需要登录");
 
     private int code;
     private String msg;

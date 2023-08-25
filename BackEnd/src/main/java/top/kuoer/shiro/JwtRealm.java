@@ -47,7 +47,9 @@ public class JwtRealm extends AuthorizingRealm {
             List<RolePermission> permissionList = this.authorizationMapper.getRolePerissionByRoleId(userRole.getRoleid());
             for(RolePermission rolePermission : permissionList) {
                 Permission permission = this.authorizationMapper.getPermissionByPermissionId(rolePermission.getPermissionid());
-                permissions.add(permission.getName());
+                if(null != permission) {
+                    permissions.add(permission.getName());
+                }
             }
         }
 

@@ -205,13 +205,4 @@ public class PluginTools {
         }
     }
 
-//    public void test() throws Exception {
-//        DefaultWebSecurityManager securityManager = (DefaultWebSecurityManager) SecurityUtils.getSecurityManager();
-//        ShiroFilterFactoryBean a = null;
-//        AbstractShiroFilter abstractShiroFilter = (AbstractShiroFilter) a.getObject();
-//        PathMatchingFilterChainResolver pathMatchingFilterChainResolver = (PathMatchingFilterChainResolver)abstractShiroFilter.getFilterChainResolver();
-//        FilterChainManager filterChainManager = pathMatchingFilterChainResolver.getFilterChainManager();
-//        filterChainManager.getFilters().clear();
-//    }
-
 }

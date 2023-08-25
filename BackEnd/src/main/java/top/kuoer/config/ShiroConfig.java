@@ -4,10 +4,7 @@ import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.filter.mgt.DefaultFilterChainManager;
-import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +19,7 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
-    private AuthorizationMapper authorizationMapper;
+    private final AuthorizationMapper authorizationMapper;
 
     @Autowired
     public ShiroConfig(AuthorizationMapper authorizationMapper) {
@@ -38,11 +35,6 @@ public class ShiroConfig {
         filterMap.put("jwt", new JwtFilter());
         shiroFilterFactoryBean.setFilters(filterMap);
         shiroFilterFactoryBean.setFilterChainDefinitionMap(getStringStringMap());
-
-//        AbstractShiroFilter abstractShiroFilter = (AbstractShiroFilter) shiroFilterFactoryBean.getObject();
-//        PathMatchingFilterChainResolver pathMatchingFilterChainResolver = (PathMatchingFilterChainResolver) abstractShiroFilter.getFilterChainResolver();
-//        DefaultFilterChainManager defaultFilterChainManager = (DefaultFilterChainManager) pathMatchingFilterChainResolver.getFilterChainManager();
-//        System.out.println(defaultFilterChainManager.getFilterChains().get("/auth/modifyrolepermission"));
 
         return shiroFilterFactoryBean;
     }
@@ -74,9 +66,10 @@ public class ShiroConfig {
         filterChain.put("/friendchain/addFriendChain", "jwt");
 
         filterChain.put("/plugin/findallplugininfo", "jwt");
+        filterChain.put("/plugin/getpluginconfigpage", "jwt");
 
         // 使用这个后所有接口都会变成匿名接口
-//        filterChain.put("/**", "anon");
+        //filterChain.put("/**", "anon");
         return filterChain;
     }
 

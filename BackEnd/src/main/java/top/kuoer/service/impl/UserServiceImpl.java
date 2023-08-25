@@ -1,5 +1,6 @@
 package top.kuoer.service.impl;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.kuoer.common.Result;
@@ -44,7 +45,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result verification(String token) {
-        return new Result(ResultCode.SUCCESS, "验证成功.");
+        if(SecurityUtils.getSubject().isAuthenticated()) {
+            return new Result(ResultCode.SUCCESS, "验证成功.");
+        }
+        return new Result(ResultCode.LOGIN, "验证失败.");
     }
 
 
@@ -94,10 +98,13 @@ public class UserServiceImpl implements UserService {
     public Result getUserInfo(String token) {
         int id = Integer.parseInt(Objects.requireNonNull(JwtUtil.getInfo(token, "id")));
         User user = this.userMapper.getUserInfoById(id);
-        user.setToken(token);
-        user.setPassword("");
-        this.setUserRolePermission(user);
-        return new Result(ResultCode.SUCCESS, user);
+        if(null != user) {
+            user.setToken(token);
+            user.setPassword("");
+            this.setUserRolePermission(user);
+            return new Result(ResultCode.SUCCESS, user);
+        }
+        return new Result(ResultCode.NOTFOUND, "用户还没有登录");
     }
 
     public void setUserRolePermission(User user) {
