@@ -19,7 +19,8 @@
                 url: api + 'sitemap/saveConfig',
                 type: 'get',
                 data: {
-                    frontendaddress: frontEndAddressInput.val()
+                    frontendaddress: frontEndAddressInput.val(),
+                    token
                 },
                 success: function(target) {
                     if(target == 'yes') {
