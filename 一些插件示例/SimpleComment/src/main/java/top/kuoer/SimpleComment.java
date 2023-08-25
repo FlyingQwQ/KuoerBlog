@@ -32,12 +32,12 @@ public class SimpleComment extends AppPlugin {
         pluginTools.log("[SimpleComment] 简单评论区插件卸载成功！");
     }
 
-    @ReqFindPluginData({"/pages/post.html"})
+    @ReqFindPluginData(value = {"/pages/post.html"})
     public String postComment(URL pageURL, RequestEvent requestEvent) {
         return pluginTools.resFileTransTemplate(new String[]{"SimpleComment.html"});
     }
 
-    @Route("/comment/findCommentByLabel")
+    @Route(value = "/comment/findCommentByLabel")
     public void findCommentByLabel(RequestEvent requestEvent) {
         String label = requestEvent.getRequest().getParameter("label");
         this.sendJson(requestEvent.getResponse(), this.commentService.findCommentByLabel(label));

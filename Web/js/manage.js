@@ -1,16 +1,6 @@
 let content = $('.content');
 
 $(document).ready(function() {
-    var result = getQueryVariable('result');
-    if(result != '' || result != false) {
-        if(result == 'qqsuccess') {
-            alert('QQ绑定成功');
-        } else if(result == 'qqerror') {
-            alert('QQ绑定失败');
-        }
-        location.href = '.';
-    }
-
     // 默认加载页面
     let uriItemName = getQueryVariable('item');
     if(!uriItemName) {

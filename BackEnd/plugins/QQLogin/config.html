@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>SiteMap配置页面</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>QQ登录配置页面</title>
 </head>
 <body>
     <span>前端地址</span>
     <input class="frontEndAddressInput" type="text">
 
     <button onclick="saveConfig()">保存配置</button>
-    <br>
-    <a href="#" target=_blank>网站地图预览</a>
-
     <script>
         let frontEndAddressInput = $('.frontEndAddressInput');
         function saveConfig() {
             $.ajax({
-                url: api + 'sitemap/saveConfig',
+                url: api + 'qqlogin/saveConfig',
                 type: 'get',
                 data: {
                     frontendaddress: frontEndAddressInput.val()
@@ -34,7 +33,7 @@
 
         function loadConfig() {
             $.ajax({
-                url: api + 'sitemap/getPluginConfig',
+                url: api + 'qqlogin/getPluginConfig',
                 type: 'get',
                 success: function(target) {
                     if(target !== '') {
@@ -46,7 +45,6 @@
         }
 
         loadConfig();
-        $('a').attr('href', api + 'sitemap.txt');
     </script>
 </body>
 </html>

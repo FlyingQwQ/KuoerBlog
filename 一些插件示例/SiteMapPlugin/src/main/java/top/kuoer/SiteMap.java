@@ -23,6 +23,7 @@ public class SiteMap extends AppPlugin {
         this.postsMapper = pluginTools.getBean(PostsMapper.class);
 
         pluginTools.log("[SiteMap] 自动生成网站地图插件加载成功！");
+
     }
 
     @Override
@@ -55,7 +56,7 @@ public class SiteMap extends AppPlugin {
         }
     }
 
-    @Route("/sitemap/saveConfig")
+    @Route(value = "/sitemap/saveConfig", permissions = {"sitemap:saveconfig"})
     public void saveConfig(RequestEvent requestEvent) {
         String target = "no";
 

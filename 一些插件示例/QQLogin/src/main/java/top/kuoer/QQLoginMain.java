@@ -6,13 +6,15 @@ import top.kuoer.plugin.AppPlugin;
 import top.kuoer.plugin.annotation.ReqFindPluginData;
 import top.kuoer.plugin.annotation.Route;
 import top.kuoer.plugin.event.RequestEvent;
-import top.kuoer.service.AdminService;
+import top.kuoer.service.UserService;
+import top.kuoer.shiro.JwtUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class QQLoginMain extends AppPlugin {
 
@@ -24,7 +26,7 @@ public class QQLoginMain extends AppPlugin {
 
         pluginTools.addMapper(QQLoginMapper.class);
 
-        this.qqLoginService = new QQLoginService(pluginTools.getMapper(QQLoginMapper.class), pluginTools.getBean(AdminService.class));
+        this.qqLoginService = new QQLoginService(pluginTools.getMapper(QQLoginMapper.class), pluginTools.getBean(UserService.class));
 
         pluginTools.log("[QQLogin] 后台QQ登录插件加载成功！");
     }
@@ -61,17 +63,18 @@ public class QQLoginMain extends AppPlugin {
         requestEvent.getResponse().sendRedirect(fileToYML("config.yml").get("frontendaddress") + "pages/admin/index.html?token=" + token);
     }
 
-    @Route("/admin/bindqq")
+    @Route(value = "/admin/bindqq", permissions = {"qqlogin:bindqq"})
     public void bindQQ(RequestEvent requestEvent) throws IOException {
         HttpServletRequest request = requestEvent.getRequest();
 
         String token = request.getParameter("token");
+        int userid = Integer.parseInt(Objects.requireNonNull(JwtUtil.getInfo(token, "id")));
 
-        String result = this.qqLoginService.bindQQ(token, getQQLoginData(request));
+        String result = this.qqLoginService.bindQQ(userid, getQQLoginData(request));
         requestEvent.getResponse().sendRedirect(fileToYML("config.yml").get("frontendaddress") + "pages/admin/manage.html?result=" + result);
     }
 
-    @Route("/qqlogin/saveConfig")
+    @Route(value = "/qqlogin/saveConfig", permissions = {"qqlogin:saveconfig"})
     public void saveConfig(RequestEvent requestEvent) {
         String target = "no";
 

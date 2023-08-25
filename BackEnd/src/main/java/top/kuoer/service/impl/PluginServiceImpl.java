@@ -27,14 +27,14 @@ public class PluginServiceImpl implements PluginService {
     @Override
     public Result pageFindPlugin(String pageURL, RequestEvent requestEvent) {
         String token = requestEvent.getRequest().getParameter("token");
-        if(null == token || token.isEmpty()) {
-            return new Result(ResultCode.AUTHERROR, "带Token请求，但似乎Token的格式不正确");
+        if(null != token && !token.isEmpty()) {
+            try {
+                SecurityUtils.getSubject().login(new JwtToken(token));
+            } catch (Exception e) {
+                return new Result(ResultCode.AUTHERROR, "带Token请求，验证时出现错误，请检查token是否有效");
+            }
         }
-        try {
-            SecurityUtils.getSubject().login(new JwtToken(token));
-        } catch (Exception e) {
-            return new Result(ResultCode.AUTHERROR, "带Token请求，验证时出现错误，请检查token是否有效");
-        }
+
 
         List<MatchPluginDataEntity> matchPluginDataList = new ArrayList<>();
         try {
