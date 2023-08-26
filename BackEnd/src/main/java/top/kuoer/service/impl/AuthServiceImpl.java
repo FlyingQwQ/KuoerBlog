@@ -57,9 +57,13 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public Result removeRole(int roleid) {
-        if(this.authorizationMapper.removeRole(roleid) > 0) {
-            this.authorizationMapper.clearAllRolePermissionByRoleId(roleid);
-            return new Result(ResultCode.SUCCESS, "删除成功！");
+        if(this.authorizationMapper.getUserRoleByRoleId(roleid).isEmpty()) {
+            if(this.authorizationMapper.removeRole(roleid) > 0) {
+                this.authorizationMapper.clearAllRolePermissionByRoleId(roleid);
+                return new Result(ResultCode.SUCCESS, "删除成功！");
+            }
+        } else {
+            return new Result(ResultCode.OPERATIONFAIL, "该角色还有用户正在使用，请调整后删除！");
         }
         return new Result(ResultCode.OPERATIONFAIL, "删除失败！");
     }
@@ -67,6 +71,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public Result removePerission(int permissionId) {
         if(this.authorizationMapper.removePermission(permissionId) > 0) {
+            this.authorizationMapper.removeRolePermissionByPermissionId(permissionId);
             return new Result(ResultCode.SUCCESS, "删除成功！");
         }
         return new Result(ResultCode.OPERATIONFAIL, "删除失败！");

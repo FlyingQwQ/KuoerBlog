@@ -16,6 +16,9 @@ public interface AuthorizationMapper {
     @Select("select * from userrole where userid=#{userid}")
     List<UserRole> getUserRoleByUserId(int userid);
 
+    @Select("select * from userrole where roleid=#{roleid}")
+    List<UserRole> getUserRoleByRoleId(@Param("roleid") int roleId);
+
     @Update("update userrole set roleid=#{roleid} where userid=#{userid}")
     int setUserRoleByUserId(@Param("userid") int userid, @Param("roleid") int roleid);
 
@@ -27,6 +30,15 @@ public interface AuthorizationMapper {
 
     @Select("select * from rolepermission where roleid=#{roleid}")
     List<RolePermission> getRolePerissionByRoleId(int roleid);
+
+    @Delete("delete from rolepermission where roleid=#{roleId}")
+    int clearAllRolePermissionByRoleId(@Param("roleId") int roleId);
+
+    @Insert("insert into rolepermission (roleid, permissionid) values (#{roleId}, #{permissionId})")
+    int addRolePermission(@Param("roleId") int roleId, @Param("permissionId") int permissionId);
+
+    @Delete("delete from rolepermission where permissionid=#{permissionid}")
+    int removeRolePermissionByPermissionId(@Param("permissionid") int permissionId);
 
     @Select("select * from roles where id=#{roleid}")
     Role getRoleByRoleId(int roleid);
@@ -42,12 +54,6 @@ public interface AuthorizationMapper {
 
     @Update("update roles set name=#{name}, description=#{description} where id=#{roleId}")
     int setRoleInfoByRoleId(@Param("roleId") int roleId, @Param("name") String name, @Param("description") String description);
-
-    @Delete("delete from rolepermission where roleid=#{roleId}")
-    int clearAllRolePermissionByRoleId(int roleId);
-
-    @Insert("insert into rolepermission (roleid, permissionid) values (#{roleId}, #{permissionId})")
-    int addRolePermission(@Param("roleId") int roleId, @Param("permissionId") int permissionId);
 
     @Insert("insert into roles (name, description) values (#{name}, #{description})")
     int addRole(@Param("name") String name, @Param("description") String description);

@@ -9,38 +9,39 @@ $(document).ready(function() {
         loadItem(uriItemName);
     }
 
-    $('.title .userName').text(currUserInfo.name );
+    $('.title .userName').text(currUserInfo.name);
+
+    verification(token);
 });
 
 $('.main .header .homeBtn').click(function() {
     location.href = '../../index.html'
 });
-$('.main .header .userInfoBtn').click(function() {
-    loadItem('user_info');
+$('.main .header .item').click(function() {
+    loadItem($(this).attr('item'));
 });
-$('.main .header .personnelBtn').click(function() {
-    loadItem('personnel');
-});
-$('.main .header .permissionBtn').click(function() {
-    loadItem('permission');
-});
-$('.main .header .postsBtn').click(function() {
-    loadItem('posts_manage');
-});
-$('.main .header .pushBtn').click(function() {
-    loadItem('send_posts');
-});
-$('.main .header .webManageBtn').click(function() {
-    loadItem('web_manage');
-});
-$('.main .header .pluginManageBtn').click(function() {
-    loadItem('plugin_manage');
-});
-
 
 
 function loadItem(pageName) {
-    verification(token);
+    let items = $('.main .header .item');
+    let next = true;
+
+    // 检查是否拥有指定权限
+    items.each((index, element) => {
+        let item = $(element);
+        if(item.attr('item') == pageName) {
+            let permission = item.attr('permission')
+            if(permission != undefined) {
+                if(!checkLoadItemPermission(permission)) {
+                    loadItem('user_info');
+                    next = false;
+                }
+            }
+        }
+    });
+    if(!next) {
+        return;
+    }
 
     $.ajax({
         url: './' + pageName + '.html',
@@ -51,8 +52,7 @@ function loadItem(pageName) {
             loadPlugin(location.origin + "/manage_menu?item=" + pageName);
         }
     });
-    
-    let items = $('.main .header .item');
+
     items.each((index, element) => {
         let item = $(element);
         if(item.attr('item') == pageName) {
@@ -60,6 +60,7 @@ function loadItem(pageName) {
         }
     });
 }
+
 
 function verification(token) {
     $.ajax({
@@ -89,4 +90,16 @@ function getQueryVariable(variable) {
         }
     }
     return false;
+}
+
+function checkLoadItemPermission(permissionName) {
+    let target = false;
+    if(currUserInfo.permissions != undefined) {
+        currUserInfo.permissions.forEach((permission) => {
+            if(permission.name == permissionName) {
+                target = true;
+            }
+        });
+    }
+    return target;
 }

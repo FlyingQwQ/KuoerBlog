@@ -44,6 +44,8 @@ window.permission = (function() {
             success: function(target) {
                 if(target.code == 1) {
                     loadItem('permission');
+                } else {
+                    alert(target.data);
                 }
             }
         });
