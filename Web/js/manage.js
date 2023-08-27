@@ -50,6 +50,9 @@ function loadItem(pageName) {
             content.html(target);
             history.pushState("", "", window.location.pathname + "?item=" + pageName);
             loadPlugin(location.origin + "/manage_menu?item=" + pageName);
+        },
+        error: function(error) {
+            loadItem('user_info');
         }
     });
 

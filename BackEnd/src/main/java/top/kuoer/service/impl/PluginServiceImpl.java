@@ -35,7 +35,6 @@ public class PluginServiceImpl implements PluginService {
             }
         }
 
-
         List<MatchPluginDataEntity> matchPluginDataList = new ArrayList<>();
         try {
             List<AppPlugin> appPluginList =  BlogApplication.pluginManager.getAllPlugins();
