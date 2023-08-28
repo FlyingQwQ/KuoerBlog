@@ -1,0 +1,24 @@
+extends AppPlugin
+开发插件时需要继承
+
+PluginTools
+插件工具类
+
+plugin.yml
+插件信息文件（必须存在）
+
+config.html
+插件配置页面
+
+注解：
+@Route("/test")
+public void say(RequestEvent requestEvent)
+自定义接口，可以实现自己想要的功能
+
+@ReqFindPluginData("/pages/post.html")
+public String onPageFindPluginEvent(URL pageURL, RequestEvent requestEvent)
+前端访问指定URI页面的时候会触发，可以返回html,css,java字符串到前端，可以往页面追加UI
+
+@ActionHook("/adminlist")
+public void actionHook66(ActionHookEvent actionHookEvent)
+监听平台自带的Controller接口，可以通过ActionHookEvent对接口进行拦截和修改操作

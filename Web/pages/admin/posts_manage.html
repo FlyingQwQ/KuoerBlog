@@ -1,5 +1,33 @@
-<link rel="stylesheet" href="../../css/posts_manage.css">
+<style>
+    .posts {
+        min-width: 550px;
+    }
 
+    .posts .region {
+        margin: 10px 0px 0px 0px;
+    }
+    .posts .region .year {
+        margin: 0;
+        font-size: 25px;
+    } 
+
+    .posts .region .item .date {
+        margin: 0;
+        font-size: 18px;
+    }
+    .posts .region .item .title {
+        font-size: 18px;
+    }
+
+    .posts .title {
+        height: max-content;
+    }
+    .posts .item {
+        margin-bottom: 5px;
+    }
+</style>
+
+<button type="button" class="btn btn-primary" style="margin-bottom: 10px;" onclick="loadItem('send_posts')">发布新帖</button>
 <div class="panel panel-default">
     <div class="panel-body" style="overflow-x: scroll;">
         <div class="posts">

@@ -11,7 +11,9 @@ $(document).ready(function() {
 
     $('.title .userName').text(currUserInfo.name);
 
-    verification(token);
+    verification().catch(function(data) {
+        location.href = './login.html';
+    });
 });
 
 $('.main .header .homeBtn').click(function() {
@@ -24,9 +26,9 @@ $('.main .header .item').click(function() {
 
 function loadItem(pageName) {
     let items = $('.main .header .item');
-    let next = true;
 
     // 检查是否拥有指定权限
+    let next = true;
     items.each((index, element) => {
         let item = $(element);
         if(item.attr('item') == pageName) {
@@ -39,9 +41,7 @@ function loadItem(pageName) {
             }
         }
     });
-    if(!next) {
-        return;
-    }
+    if(!next) return;
 
     $.ajax({
         url: './' + pageName + '.html',
@@ -64,23 +64,9 @@ function loadItem(pageName) {
     });
 }
 
-
-function verification(token) {
-    $.ajax({
-        url: api + 'user/verification',
-        type: 'get',
-        data: {token},
-        success: function(target) {
-            if(target.code == 5) {
-                location.href = './index.html';
-            }
-        }
-    });
-}
-
 function cancel() {
     localStorage.setItem('token', '');
-    location.href = './index.html';
+    location.href = './login.html';
 }
 
 function getQueryVariable(variable) {

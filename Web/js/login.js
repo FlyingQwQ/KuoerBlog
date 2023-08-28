@@ -1,5 +1,7 @@
 // 验证登录状态
-verification(token);
+verification().then(function(data) {
+    location.href = './manage.html';
+});
 
 $(document).ready(function() {
     var token = getQueryVariable('token');
@@ -42,19 +44,6 @@ function login(username, password) {
             } else {
                 alert('登录失败！');
             }
-        }
-    });
-}
-
-function verification(token) {
-    $.ajax({
-        url: api + 'user/verification',
-        type: 'get',
-        data: {token},
-        success: function(target) {
-            if(target.code == 1) {
-                location.href = './manage.html';
-            } 
         }
     });
 }

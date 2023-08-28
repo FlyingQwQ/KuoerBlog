@@ -64,6 +64,28 @@ function permission_display_dom() {
     });
 }
 
+async function verification() {
+    const target = await new Promise(function(resolve, reject) {
+        $.ajax({
+            url: api + 'user/verification',
+            type: 'get',
+            data: {token},
+            async: false,
+            success: function(target) {
+                if(target.code == 1) {
+                    resolve(target);
+                } else {
+                    reject(target);
+                }
+            },
+            error: function(error) {
+                reject(error);
+            }
+        });
+    });
+    return target;
+}
+
 loadPlugin();
 permission_display_dom();
 
