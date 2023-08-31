@@ -1,0 +1,74 @@
+<style>
+    html, body {
+        transition: all .5s;
+        background-color: white;
+    }
+    .dark {
+        filter: invert(1) hue-rotate(180deg);
+    }
+    .notDark {
+        filter: invert(1) hue-rotate(180deg);
+    }
+</style>
+
+<script>
+    let darkmod = (function() {
+        $('.main .header .items').append('<a href="javascript:darkmod.mode()" class="item switchDarkMode"></a>');
+
+        if(localStorage.getItem("darkmod") == 'true') {
+            document.documentElement.classList.toggle('dark');
+
+            let switchDarkMode = $('.switchDarkMode');
+            switchDarkMode.text('🌕');
+            switchDarkMode.addClass('notDark');
+
+            let targetElement = document.querySelector('.main');
+            let observer = new MutationObserver(function(mutationsList, observer) {
+                // 在回调函数中处理变化
+                for (let mutation of mutationsList) {
+                    if (mutation.type === 'childList') {
+                        $('img').each((index, img) => {
+                            $(img).addClass('notDark');
+                        });
+                    }
+                }
+            });
+            let config = { childList: true, subtree: true };
+            observer.observe(targetElement, config);
+        } else {
+            $('.switchDarkMode').text('🌙');
+        }
+
+        function mode() {
+            let isOpen = localStorage.getItem("darkmod");
+            if(isOpen == 'true') {
+                localStorage.setItem("darkmod", false);
+
+                let switchDarkMode = $('.switchDarkMode');
+                switchDarkMode.text('🌙');
+                switchDarkMode.removeClass('notDark');
+
+                document.documentElement.classList.remove('dark');
+                document.querySelectorAll('img').forEach(function(elm) {
+                    elm.classList.remove('notDark');
+                });
+            } else {
+                // 已开启
+                localStorage.setItem("darkmod", true);
+
+                let switchDarkMode = $('.switchDarkMode');
+                switchDarkMode.text('🌕');
+                switchDarkMode.addClass('notDark');
+
+                document.documentElement.classList.add('dark');
+                document.querySelectorAll('img').forEach(function(elm) {
+                    elm.classList.add('notDark');
+                });
+            }
+        }
+
+        return {
+            mode
+        }
+    })();
+</script>

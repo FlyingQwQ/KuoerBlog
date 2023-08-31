@@ -1,3 +1,13 @@
+<style>
+	ul {
+		padding: 0;
+		list-style: none;
+	}
+	ul > li {
+		margin-bottom: 5px;
+	}
+</style>
+
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h3 class="panel-title">
@@ -5,10 +15,23 @@
 		</h3>
 	</div>
 	<div class="panel-body">
-		用户名：<span class="username"></span>
+		<ul>
+			<li>用户名：<span class="username"></span></li>
+			<li>权限组：<span class="roles"></span></li>
+		</ul>
 	</div>
 </div>
 
 <script>
-    $('.username').text(currUserInfo.name);
+	(function() {
+		$('.username').text(currUserInfo.name);
+	
+		let roleDescriptions = '';
+		currUserInfo.roles.forEach(role => {
+			roleDescriptions = roleDescriptions.concat(role.description + '，');
+		});
+		roleDescriptions = roleDescriptions.substring(0, roleDescriptions.lastIndexOf('，'));
+
+		$('.roles').text(roleDescriptions);
+	})();
 </script>

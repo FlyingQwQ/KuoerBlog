@@ -3,7 +3,6 @@ $(document).ready(function() {
     loadPosts(content)
 });
 
-
 // 获取帖子列表
 function loadPosts(element) {
     $.ajax({

@@ -204,8 +204,6 @@ window.permission = (function() {
         }
     });
 
-
-
     loadRoles();
     loadPermissions();
 
