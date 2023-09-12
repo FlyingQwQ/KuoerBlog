@@ -66,7 +66,7 @@ public class SimpleComment extends AppPlugin {
         this.sendJson(requestEvent.getResponse(), this.commentService.addReplyComment(replyComment));
     }
 
-    @Route("/comment/delComment")
+    @Route(value = "/comment/delComment", permissions = {"comment:del"})
     public void delComment(RequestEvent requestEvent) {
         int id = Integer.parseInt(requestEvent.getRequest().getParameter("id"));
         this.sendJson(requestEvent.getResponse(), this.commentService.delComment(id));

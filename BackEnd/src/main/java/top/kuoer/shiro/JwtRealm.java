@@ -64,7 +64,7 @@ public class JwtRealm extends AuthorizingRealm {
         String token = (String) authenticationToken.getCredentials();
         String userName = JwtUtil.getInfo(token, "name");
         if(null == userName) {
-            throw  new AuthenticationException("token认证失败！");
+            throw new AuthenticationException("token认证失败！");
         }
 
         return new SimpleAuthenticationInfo(token, token, "JwtRealm");

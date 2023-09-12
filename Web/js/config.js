@@ -3,7 +3,7 @@ var api = 'http://localhost:8081/';
 var createTime = '2021 - ' + new Date().getFullYear();
 var filingNumber = '粤ICP备2022013504号';
 var token = localStorage.getItem('token');
-if(token == 'undefined') {
+if(token == 'undefined' || localStorage.getItem('token') == null) {
     localStorage.setItem('token', '');
     location.reload();
 }

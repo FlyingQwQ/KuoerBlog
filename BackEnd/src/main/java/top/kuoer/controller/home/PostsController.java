@@ -1,5 +1,6 @@
 package top.kuoer.controller.home;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
