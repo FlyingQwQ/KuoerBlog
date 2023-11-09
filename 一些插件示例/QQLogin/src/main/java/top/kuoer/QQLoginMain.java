@@ -45,7 +45,7 @@ public class QQLoginMain extends AppPlugin {
         pluginTools.log("[QQLogin] 后台QQ登录插件卸载成功！");
     }
 
-    @ReqFindPluginData("/pages/admin/index.html")
+    @ReqFindPluginData("/pages/admin/login.html")
     public String openLoginPageEvent(URL pageURL, RequestEvent requestEvent) {
         return pluginTools.resFileTransTemplate(new String[]{"loginpage.html"});
     }
@@ -60,7 +60,7 @@ public class QQLoginMain extends AppPlugin {
         HttpServletRequest request = requestEvent.getRequest();
 
         String token = this.qqLoginService.qqLogin(getQQLoginData(request));
-        requestEvent.getResponse().sendRedirect(fileToYML("config.yml").get("frontendaddress") + "pages/admin/index.html?token=" + token);
+        requestEvent.getResponse().sendRedirect(fileToYML("config.yml").get("frontendaddress") + "pages/admin/login.html?token=" + token);  // 后面的地址是登录成功后回调的地址
     }
 
     @Route(value = "/admin/bindqq", permissions = {"qqlogin:bindqq"})
@@ -71,7 +71,7 @@ public class QQLoginMain extends AppPlugin {
         int userid = Integer.parseInt(Objects.requireNonNull(JwtUtil.getInfo(token, "id")));
 
         String result = this.qqLoginService.bindQQ(userid, getQQLoginData(request));
-        requestEvent.getResponse().sendRedirect(fileToYML("config.yml").get("frontendaddress") + "pages/admin/manage.html?result=" + result);
+        requestEvent.getResponse().sendRedirect(fileToYML("config.yml").get("frontendaddress") + "pages/admin/manage.html?result=" + result);   // 后面的地址是绑定成功后回调的地址
     }
 
     @Route(value = "/qqlogin/saveConfig", permissions = {"qqlogin:saveconfig"})
